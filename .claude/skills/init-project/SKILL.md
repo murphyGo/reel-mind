@@ -372,35 +372,322 @@ Generate project root `CLAUDE.md`:
 # {Project Name}
 
 ## Overview
-[From requirements overview]
+{Brief description from requirements}
+
+---
+
+## Important: Before Development
+
+**Always check `docs/development-plan.md` before starting any work.**
+
+Run `/dev-{name}` to:
+1. See current development status
+2. Get the next task to work on
+3. Follow the established development workflow
+
+---
 
 ## Quick Commands
 
-| Skill | Purpose |
-|-------|---------|
-| `/dev-{name}` | Main development driver |
-| `/code-review git` | Review changed files |
-| `/tech-debt` | View tech debt dashboard |
-| `/cross-check` | Verify implementation vs requirements |
+| Skill | Purpose | When to Use |
+|-------|---------|-------------|
+| `/dev-{name}` | Main development driver | Start here for any development work |
+| `/code-review git` | Review code changes | Before committing |
+| `/tech-debt` | Manage technical debt | Track and prioritize issues |
+| `/cross-check` | Verify requirements | After completing a phase |
+
+---
+
+## Key Documents
+
+| Document | Purpose |
+|----------|---------|
+| `docs/development-plan.md` | **Start here** - Development roadmap and task tracking |
+| `docs/requirements.md` | Project requirements and acceptance criteria |
+| `docs/DESIGN.md` | Architecture decisions and rationale |
+| `docs/TECH-DEBT.md` | Technical debt registry |
+| `aidlc-docs/` | AI-DLC generated specifications |
+
+---
+
+## Development Workflow
+
+```
+1. /dev-{name}          → Get next task from development-plan.md
+2. Implement            → Write code following requirements
+3. /code-review git     → Review before committing
+4. Commit               → Save your work
+5. /dev-{name}          → Mark complete, get next task
+```
+
+---
 
 ## Project Structure
 
 ```
-[Generated structure based on tech stack]
+{Generated structure based on tech stack}
 ```
 
-## Development Workflow
+---
 
-1. Run `/dev-{name}` to get next task
-2. Implement the task
+## Tech Stack
+
+{From technical decisions - language, framework, database, etc.}
+```
+
+### Step 11.1: Create DESIGN.md
+
+Generate `docs/DESIGN.md`:
+
+```markdown
+# Design Document: {Project Name}
+
+*Generated on {date}*
+
+## Overview
+
+{Brief description of the system architecture based on requirements}
+
+## Architecture
+
+### High-Level Design
+
+```
+{ASCII diagram showing main components and their relationships}
+```
+
+### Components
+
+| Component | Responsibility | Technology |
+|-----------|---------------|------------|
+| {component} | {what it does} | {tech choice} |
+
+## Technical Decisions
+
+### TD-001: {Decision Topic}
+
+**Choice**: {What was chosen}
+**Rationale**: {Why this choice was made}
+**Alternatives Considered**: {What else was evaluated}
+
+## Data Model
+
+{Entity descriptions and relationships based on requirements}
+
+## API Design (if applicable)
+
+{Endpoint patterns, authentication approach, etc.}
+
+## Non-Functional Considerations
+
+### Performance
+{How performance requirements will be met}
+
+### Security
+{Security measures and approach}
+
+### Scalability
+{Scaling strategy}
+
+---
+
+*Update this document as architectural decisions evolve during development.*
+```
+
+### Step 11.2: Create development-plan.md
+
+Generate `docs/development-plan.md`:
+
+```markdown
+# Development Plan: {Project Name}
+
+*Generated on {date}*
+
+## Current Status
+
+| Component | Status | Notes |
+|-----------|--------|-------|
+| {component from DESIGN} | ❌ Not Started | |
+
+---
+
+## Phase 1: Foundation
+
+### 1.1 - {First task based on requirements}
+- [ ] {Implementation item}
+- [ ] {Implementation item}
+- [ ] Add unit tests
+
+### 1.2 - {Second task}
+- [ ] {Implementation item}
+- [ ] {Implementation item}
+- [ ] Add unit tests
+
+---
+
+## Phase 2: Core Features
+
+### 2.1 - {Feature from FR requirements}
+- [ ] {Implementation item}
+- [ ] {Implementation item}
+- [ ] Add integration tests
+
+### 2.2 - {Another feature}
+- [ ] {Implementation item}
+- [ ] {Implementation item}
+
+---
+
+## Phase 3: Polish & Integration
+
+### 3.1 - Error Handling & Edge Cases
+- [ ] Implement error handling patterns
+- [ ] Handle edge cases
+- [ ] Add error recovery tests
+
+### 3.2 - Documentation & Cleanup
+- [ ] Update API documentation
+- [ ] Code cleanup and refactoring
+- [ ] Final testing
+
+---
+
+## Progress Tracking
+
+| Phase | Tasks | Complete | Progress |
+|-------|-------|----------|----------|
+| Phase 1 | X | 0 | 0% |
+| Phase 2 | Y | 0 | 0% |
+| Phase 3 | Z | 0 | 0% |
+
+---
+
+*This plan is updated automatically by `/dev-{name}` as tasks are completed.*
+```
+
+### Step 11.3: Create TECH-DEBT.md
+
+Generate `docs/TECH-DEBT.md`:
+
+```markdown
+# Technical Debt Registry
+
+## Summary
+
+| Priority | Count | Oldest |
+|----------|-------|--------|
+| Critical | 0 | - |
+| High | 0 | - |
+| Medium | 0 | - |
+| Low | 0 | - |
+
+---
+
+## Active Items
+
+### Critical Priority
+
+_No critical items._
+
+### High Priority
+
+_No high priority items._
+
+### Medium Priority
+
+_No medium priority items._
+
+### Low Priority
+
+_No low priority items._
+
+---
+
+## Resolved Items
+
+_No resolved items yet._
+
+---
+
+*Managed by `/tech-debt` skill. Run `/tech-debt add` to add new items.*
+```
+
+### Step 11.4: Create README.md
+
+Generate project `README.md` (replace aidlc-starter README):
+
+```markdown
+# {Project Name}
+
+{One-liner from IDEA.md}
+
+## Overview
+
+{Problem statement from requirements}
+
+## Features
+
+- {Feature 1 from requirements}
+- {Feature 2 from requirements}
+- {Feature 3 from requirements}
+
+## Tech Stack
+
+| Component | Technology |
+|-----------|------------|
+| Language | {choice} |
+| Framework | {choice} |
+| Database | {choice} |
+
+## Getting Started
+
+### Prerequisites
+
+- {Based on tech stack}
+
+### Installation
+
+```bash
+# Clone the repository
+git clone {repo-url}
+cd {project-name}
+
+# Install dependencies
+{install command based on tech stack}
+
+# Run the application
+{run command based on tech stack}
+```
+
+## Development
+
+This project uses AI-DLC methodology with Claude Code skills.
+
+### Quick Start
+
+```bash
+claude
+/dev-{name}
+```
+
+### Development Workflow
+
+1. Run `/dev-{name}` to get the next development task
+2. Implement following `docs/requirements.md`
 3. Run `/code-review git` before committing
-4. Track issues in `/tech-debt`
+4. Track technical debt with `/tech-debt`
 
-## Key Documents
+### Key Documents
 
-- `docs/requirements.md` - Project requirements
-- `docs/development-plan.md` - Development roadmap
-- `docs/TECH-DEBT.md` - Technical debt tracker
+| Document | Description |
+|----------|-------------|
+| `docs/development-plan.md` | Development roadmap |
+| `docs/requirements.md` | Detailed requirements |
+| `docs/DESIGN.md` | Architecture decisions |
+
+## License
+
+{License - default to MIT or ask user}
 ```
 
 ---
@@ -418,33 +705,100 @@ Generate project root `CLAUDE.md`:
 - Suggestions applied: {N} of {M}
 - Requirements generated: docs/requirements.md
 
-### Stage 1: AI-DLC Inputs ✅
+### Stage 1: AI-DLC Specs ✅
 - Vision document: docs/vision.md
 - Tech environment: docs/tech-env.md
+- AI-DLC docs: aidlc-docs/
 
-### Stage 2: Skills Generated ✅
-- /dev-{name}: Main development skill
-- /code-review: Code quality checks
-- /tech-debt: Debt management
-- /cross-check: Requirements compliance
+### Stage 2: Project Setup ✅
+- Skills generated: /dev-{name}, /code-review, /tech-debt, /cross-check
+- Documentation: CLAUDE.md, README.md, DESIGN.md
+- Development tracking: development-plan.md, TECH-DEBT.md
 
 ### Files Created
+- README.md (project readme)
+- CLAUDE.md (Claude context)
 - docs/requirements.md
 - docs/refinement-log.md
 - docs/vision.md
 - docs/tech-env.md
-- docs/development-plan.md (template)
-- docs/TECH-DEBT.md (template)
+- docs/DESIGN.md
+- docs/development-plan.md
+- docs/TECH-DEBT.md
 - .claude/skills/dev-{name}/SKILL.md
-- CLAUDE.md
+- .claude/skills/code-review/SKILL.md
+- .claude/skills/tech-debt/SKILL.md
+- .claude/skills/cross-check/SKILL.md
+- aidlc-docs/ (AI-DLC generated)
 
 ### Next Steps
 
-1. Review generated requirements in `docs/requirements.md`
-2. Review AI-DLC specs in `aidlc-docs/`
-3. Start development: `/dev-{name}`
+1. Review `docs/development-plan.md` for task overview
+2. Run `/dev-{name}` to start development
+3. Use `/code-review git` before committing
 
 Your project is ready for development!
+```
+
+---
+
+## Step 13: Cleanup Starter Files
+
+After project initialization, remove aidlc-starter specific files:
+
+### 13.1 Remove Starter Documentation
+
+Delete files that describe aidlc-starter (not user's project):
+
+```
+Removing aidlc-starter specific files...
+- docs/PROJECT-VISION.md (aidlc-starter meta-documentation)
+- docs/REVIEW.md (aidlc-starter analysis)
+```
+
+### 13.2 Remove Template References (Optional)
+
+Ask user about template files:
+
+```
+The skill templates in docs/references/ have been copied to .claude/skills/.
+
+Keep templates for reference? (yes/no)
+- yes: Keep docs/references/ for future reference
+- no: Remove docs/references/
+```
+
+### 13.3 Remove Bootstrap Skills
+
+Remove skills that are only needed during initialization:
+
+```
+Removing bootstrap skills (no longer needed)...
+- .claude/skills/start/
+- .claude/skills/ideate/
+- .claude/skills/init-project/
+```
+
+### 13.4 Present Cleanup Summary
+
+```
+## Cleanup Complete
+
+### Removed (aidlc-starter specific):
+- docs/PROJECT-VISION.md
+- docs/REVIEW.md
+- .claude/skills/start/
+- .claude/skills/ideate/
+- .claude/skills/init-project/
+- docs/references/ (if user chose to remove)
+
+### Kept:
+- IDEA.md (your original idea)
+- aidlc-workflows/ (needed for AI-DLC operations)
+
+Your project is now clean and ready for development!
+
+Run `/dev-{name}` to begin.
 ```
 
 ---
