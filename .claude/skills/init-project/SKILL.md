@@ -354,15 +354,56 @@ Create `.claude/skills/dev-{project}/SKILL.md`:
 
 ### Step 10: Generate Common Skills from Templates
 
-Copy skill templates from `docs/references/` to `.claude/skills/`:
+#### 10.1 Generate Customized Code Review Skill
+
+Create `.claude/skills/code-review/SKILL.md` from `docs/references/code-review-template.md`:
+
+1. **Read project's Technical Decisions** from `docs/requirements.md`
+2. **Customize template** by replacing placeholders:
+
+| Placeholder | Replace With |
+|-------------|--------------|
+| `{Project Name}` | Project name |
+| `{PRIMARY_LANGUAGE}` | Python / TypeScript / Go / etc. |
+| `{FRAMEWORK}` | FastAPI / React / Gin / etc. |
+| `{LINT_COMMAND}` | `ruff check .` / `npm run lint` / `golangci-lint run` |
+| `{TEST_COMMAND}` | `pytest` / `npm test` / `go test ./...` |
+| `{TYPE_CHECK_COMMAND}` | `mypy src/` / `tsc --noEmit` / `N/A` |
+
+3. **Include only relevant sections**:
+   - Remove language checks for unused languages
+   - Keep only the framework section matching project (e.g., FastAPI for Python+FastAPI)
+   - Keep only the style guide for project's language
+
+4. **Framework selection guide**:
+
+| Tech Stack | Include Framework Section |
+|------------|--------------------------|
+| Python + FastAPI | FastAPI |
+| Python + Django | Django |
+| Python + Flask | Flask |
+| Node.js + Express | Express |
+| Node.js + NestJS | NestJS |
+| TypeScript + React | React |
+| TypeScript + Vue | Vue |
+| Go + Gin | Gin |
+| Go + Echo | Echo |
+| Java + Spring | Spring Boot |
+| Rust + Actix | Actix |
+
+5. **Add project-specific patterns** based on `docs/DESIGN.md`:
+   - Component naming conventions
+   - File organization rules
+   - Project-specific anti-patterns to avoid
+
+#### 10.2 Copy Other Skills
+
+Copy remaining templates (no customization needed):
 
 | Template | Destination |
 |----------|-------------|
-| `docs/references/code-review-template.md` | `.claude/skills/code-review/SKILL.md` |
 | `docs/references/tech-debt-template.md` | `.claude/skills/tech-debt/SKILL.md` |
 | `docs/references/cross-check-template.md` | `.claude/skills/cross-check/SKILL.md` |
-
-These skills are generic and work with any project that follows the AI-DLC structure.
 
 ### Step 11: Create CLAUDE.md
 
