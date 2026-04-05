@@ -4,7 +4,10 @@ Bootstrap a new project from an idea to AI-DLC specs and dev skills.
 
 ## Arguments
 
-- `$ARGUMENTS` - (optional) Path to inception.md file. Defaults to `docs/inception.md` in current directory.
+- `$ARGUMENTS` - (optional) Path to idea file. If not provided, checks in order:
+  1. `IDEA.md` (primary)
+  2. `docs/PROJECT-VISION.md` (secondary)
+  3. `docs/inception.md` (legacy fallback)
 
 ## Objective
 
@@ -19,9 +22,10 @@ Transform a rough idea in inception.md into:
 
 ### Step 0: Validate Environment
 
-1. **Check inception.md exists**:
-   - Look for `$ARGUMENTS` or `docs/inception.md`
-   - If not found, show template and ask user to create it
+1. **Check idea file exists** (in priority order):
+   - If `$ARGUMENTS` provided, use that path
+   - Otherwise check: `IDEA.md` → `docs/PROJECT-VISION.md` → `docs/inception.md`
+   - If none found, suggest running `/ideate` to create one
 
 2. **Verify AI-DLC rules available**:
    - Check `aidlc-workflows/aidlc-rules/` exists
@@ -45,9 +49,9 @@ Transform a rough idea in inception.md into:
 
 ## Stage 0: Interactive Requirements Refinement
 
-### Step 1: Read and Analyze Inception
+### Step 1: Read and Analyze Idea
 
-1. **Read** the inception.md file completely
+1. **Read** the idea file completely (IDEA.md or equivalent)
 
 2. **Extract key elements**:
    - Project name/identifier
@@ -87,7 +91,7 @@ Present findings in this structured format:
 ```markdown
 ## Analysis of Your Idea
 
-I've analyzed your inception.md. Here's my understanding and suggestions:
+I've analyzed your idea. Here's my understanding and suggestions:
 
 ### What I Understand
 
@@ -234,7 +238,7 @@ Save the dialogue to `docs/refinement-log.md`:
 # Refinement Log: {Project Name}
 
 **Date**: {date}
-**Initial inception.md**: [summary of original content]
+**Initial idea**: [summary of original content from IDEA.md or equivalent]
 
 ## Refinement Dialogue
 
@@ -309,7 +313,7 @@ Create `docs/tech-env.md` (AI-DLC format):
 [From Constraints section]
 ```
 
-### Step 8: Inform About AI-DLC Execution
+### Step 8: Auto-Execute AI-DLC Inception
 
 ```
 ## AI-DLC Spec Generation
@@ -319,7 +323,10 @@ The following documents have been created:
 - docs/vision.md (AI-DLC vision document)
 - docs/tech-env.md (AI-DLC technical environment)
 
-To generate full AI-DLC specs, run:
+Now generating full AI-DLC specs...
+```
+
+**Auto-trigger AI-DLC by outputting**:
 
 > Using AI-DLC, create the inception phase documents for this project.
 
@@ -328,10 +335,7 @@ This will generate:
 - aidlc-docs/inception/application-design/
 - aidlc-docs/inception/plans/
 
-Would you like me to run AI-DLC inception now? (yes/no)
-```
-
-If user says yes, guide them through AI-DLC execution.
+Wait for AI-DLC to complete before proceeding to Stage 2.
 
 ---
 
@@ -432,7 +436,7 @@ Generate project root `CLAUDE.md`:
 ### Next Steps
 
 1. Review generated requirements in `docs/requirements.md`
-2. Run AI-DLC: "Using AI-DLC, create inception phase documents"
+2. Review AI-DLC specs in `aidlc-docs/`
 3. Start development: `/dev-{name}`
 
 Your project is ready for development!
@@ -444,8 +448,8 @@ Your project is ready for development!
 
 | Error | Recovery |
 |-------|----------|
-| inception.md not found | Show template, ask user to create |
-| inception.md empty/minimal | Start with more questions, build up |
+| No idea file found | Suggest running `/ideate` to capture idea first |
+| Idea file empty/minimal | Start with more questions, build up |
 | User doesn't respond | Re-prompt with options |
 | AI-DLC rules missing | Provide setup instructions |
 
@@ -453,7 +457,7 @@ Your project is ready for development!
 
 ## Example Invocation
 
-Default location:
+Default (auto-detects IDEA.md):
 ```
 /init-project
 ```
@@ -461,4 +465,10 @@ Default location:
 Custom path:
 ```
 /init-project /path/to/my-idea.md
+```
+
+If no idea file found:
+```
+No idea file found. Run /ideate first to capture your idea,
+or create IDEA.md at the project root.
 ```

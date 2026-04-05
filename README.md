@@ -19,18 +19,37 @@ git clone https://github.com/murphyGo/aidlc-starter.git my-project
 cd my-project
 ```
 
-### 2. Write Your Idea
+### 2. Start with Claude
 
-Create `docs/inception.md` with your project idea:
+```bash
+claude
+```
+
+Then run:
+```
+/start
+```
+
+**Option A: Guided (Recommended for rough ideas)**
+```
+/ideate
+```
+Claude will ask questions and help you shape your idea into a structured `IDEA.md`.
+
+**Option B: Write directly**
+Edit `IDEA.md` at the project root:
 
 ```markdown
-# My Project
+# My Project Idea
 
-## Vision
+## One-Liner
 A REST API for managing personal book collections
 
+## The Problem
+Book lovers struggle to track their reading lists across devices
+
 ## Core Features
-- User authentication (JWT)
+- User authentication
 - CRUD operations for books
 - Search by title/author
 - Export to CSV
@@ -40,13 +59,8 @@ A REST API for managing personal book collections
 - Database: PostgreSQL
 ```
 
-### 3. Run Init
+### 3. Initialize Project
 
-```bash
-claude
-```
-
-Then run:
 ```
 /init-project
 ```
@@ -61,7 +75,7 @@ Claude will:
 
 ### Stage 0: Interactive Requirements Refinement
 
-Claude analyzes your inception.md and:
+Claude analyzes your `IDEA.md` and:
 - Identifies gaps (error handling, edge cases, security)
 - Suggests improvements with clear rationale
 - Engages in dialogue until requirements are solid
@@ -89,6 +103,8 @@ Creates project-specific automation:
 
 | Skill | Purpose |
 |-------|---------|
+| `/start` | Unified entry point - auto-detects state and routes |
+| `/ideate` | Capture lightning idea through guided dialogue |
 | `/init-project` | Bootstrap new project from idea |
 | `/code-review git` | Review changed files for issues |
 | `/tech-debt` | View/manage technical debt |
@@ -100,14 +116,17 @@ Creates project-specific automation:
 aidlc-starter/
 ├── README.md
 ├── CLAUDE.md                    # Claude Code context
+├── IDEA.md                      # Your idea (input) ← START HERE
 ├── docs/
-│   ├── inception.md             # Your idea (input)
+│   ├── PROJECT-VISION.md        # About aidlc-starter template
 │   ├── DESIGN.md                # Architecture decisions
 │   ├── requirements.md          # Enhanced requirements (generated)
 │   ├── development-plan.md      # Development roadmap (generated)
 │   └── TECH-DEBT.md             # Technical debt tracker
 ├── .claude/
 │   └── skills/
+│       ├── start/               # Unified entry point
+│       ├── ideate/              # Idea capture skill
 │       ├── init-project/        # Bootstrap skill
 │       ├── code-review/         # Code quality skill
 │       ├── tech-debt/           # Debt management skill
@@ -136,7 +155,17 @@ The system supports continuous improvement:
 
 ```
 ┌─────────────────┐
-│  inception.md   │  Your rough idea
+│     /start      │  Unified entry point
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│    /ideate      │  Guided idea capture (optional)
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│    IDEA.md      │  Your structured idea
 └────────┬────────┘
          │
          ▼
@@ -151,13 +180,13 @@ The system supports continuous improvement:
          │
          ▼
 ┌─────────────────┐
-│    AI-DLC       │  Spec generation workflow
+│    AI-DLC       │  Spec generation workflow (auto)
 └────────┬────────┘
          │
          ▼
 ┌─────────────────┐
 │  aidlc-docs/    │  Complete specifications
-│  dev skills     │  Project automation
+│  /dev-{name}    │  Project automation
 └─────────────────┘
 ```
 

@@ -1,3 +1,10 @@
+# AI-DLC Starter - Project Vision
+
+> This document describes the aidlc-starter template itself, not your project idea.
+> For your project idea, create `IDEA.md` at the project root or run `/ideate`.
+
+---
+
 # AI-DLC Based Automated Development Template Project
 
 ## Purpose

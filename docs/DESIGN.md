@@ -12,8 +12,17 @@ AI-DLC Starter is a meta-template that transforms rough ideas into fully-specifi
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                        USER INPUT                                │
-│                      (inception.md)                              │
+│                      ENTRY POINT                                 │
+│              /start → auto-detects state and routes              │
+└─────────────────────────────┬───────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                  PRE-INCEPTION: IDEA CAPTURE                     │
+│  ┌─────────────┐    ┌─────────────┐    ┌─────────────────────┐  │
+│  │   /ideate   │───▶│  Dialogue   │───▶│     IDEA.md         │  │
+│  │   skill     │    │   Loop      │    │    (created)        │  │
+│  └─────────────┘    └─────────────┘    └─────────────────────┘  │
 └─────────────────────────────┬───────────────────────────────────┘
                               │
                               ▼
@@ -120,6 +129,8 @@ AI-DLC Starter is a meta-template that transforms rough ideas into fully-specifi
 
 | Category | Skills | Customization |
 |----------|--------|---------------|
+| Entry | /start | None (template) |
+| Ideation | /ideate | None (template) |
 | Bootstrap | /init-project | None (template) |
 | Development | /dev-{name} | Generated per project |
 | Quality | /code-review | Template (language detection) |
@@ -132,13 +143,13 @@ AI-DLC Starter is a meta-template that transforms rough ideas into fully-specifi
 ### Input Documents
 
 ```
-docs/inception.md (user creates)
+IDEA.md (user creates via /ideate or manually)
     │
-    ├── Project Name
-    ├── Vision
+    ├── One-Liner
+    ├── The Problem
     ├── Core Features
     ├── Tech Preferences (optional)
-    └── Constraints (optional)
+    └── Notes (optional)
 ```
 
 ### Generated Documents
@@ -278,7 +289,6 @@ Add to `aidlc-workflows/aidlc-rules/aws-aidlc-rule-details/extensions/`:
 
 | Limitation | Mitigation |
 |------------|------------|
-| AI-DLC execution requires manual trigger | Clear instructions provided |
 | Skills are text-based, not executable | Claude interprets and executes |
 | No IDE integration | Works in any terminal with Claude |
 
@@ -286,7 +296,10 @@ Add to `aidlc-workflows/aidlc-rules/aws-aidlc-rule-details/extensions/`:
 
 ## Future Considerations
 
-- [ ] Automated AI-DLC execution integration
+- [x] Automated AI-DLC execution integration (implemented)
+- [x] Pre-inception idea capture (/ideate skill)
+- [x] Unified entry point (/start skill)
 - [ ] IDE-specific skill variants
 - [ ] Multi-language skill templates
 - [ ] Team collaboration patterns
+- [ ] /scaffold skill for project structure generation

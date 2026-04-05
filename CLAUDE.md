@@ -13,7 +13,9 @@ This project provides:
 
 | Skill | Purpose | Example |
 |-------|---------|---------|
-| `/init-project` | Bootstrap new project from inception.md | `/init-project` |
+| `/start` | Unified entry point - auto-detects and routes | `/start` |
+| `/ideate` | Capture lightning idea through dialogue | `/ideate` |
+| `/init-project` | Bootstrap new project from IDEA.md | `/init-project` |
 | `/code-review` | Analyze code for issues | `/code-review git` |
 | `/tech-debt` | View/manage technical debt | `/tech-debt` |
 | `/cross-check` | Verify implementation vs requirements | `/cross-check` |
@@ -22,7 +24,8 @@ This project provides:
 
 | File | Purpose |
 |------|---------|
-| `docs/inception.md` | Project vision and workflow definition |
+| `IDEA.md` | User's project idea (entry point) |
+| `docs/PROJECT-VISION.md` | About the aidlc-starter template itself |
 | `docs/DESIGN.md` | Architecture and design decisions |
 | `.claude/skills/` | Skill definitions for automation |
 | `aidlc-workflows/` | AWS AI-DLC rules and templates |
@@ -31,18 +34,19 @@ This project provides:
 
 ### For This Project (aidlc-starter itself)
 
-1. Read `docs/inception.md` to understand the vision
+1. Read `docs/PROJECT-VISION.md` to understand the template's purpose
 2. Read `docs/DESIGN.md` for architecture decisions
 3. Skills are in `.claude/skills/*/SKILL.md`
 
 ### For Projects Using This Template
 
-1. User creates `docs/inception.md` with their idea
-2. Run `/init-project` to start interactive refinement
-3. Claude enhances requirements through dialogue
-4. AI-DLC specs are generated
-5. Project-specific skills are created
-6. User runs `/dev-{project}` for ongoing development
+1. User runs `/start` or `/ideate` to begin
+2. `/ideate` captures rough idea through dialogue → creates `IDEA.md`
+3. Run `/init-project` to start interactive refinement
+4. Claude enhances requirements through dialogue
+5. AI-DLC specs are auto-generated
+6. Project-specific skills are created
+7. User runs `/dev-{project}` for ongoing development
 
 ## Skill Format
 
