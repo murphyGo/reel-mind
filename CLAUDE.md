@@ -27,7 +27,8 @@ This project provides:
 | `IDEA.md` | User's project idea (entry point) |
 | `docs/PROJECT-VISION.md` | About the aidlc-starter template itself |
 | `docs/DESIGN.md` | Architecture and design decisions |
-| `.claude/skills/` | Skill definitions for automation |
+| `docs/references/` | Skill templates (copied during /init-project) |
+| `.claude/skills/` | Bootstrap skills (start, ideate, init-project) |
 | `aidlc-workflows/` | AWS AI-DLC rules and templates |
 
 ## Development Workflow

@@ -120,22 +120,27 @@ aidlc-starter/
 ├── docs/
 │   ├── PROJECT-VISION.md        # About aidlc-starter template
 │   ├── DESIGN.md                # Architecture decisions
-│   ├── requirements.md          # Enhanced requirements (generated)
-│   ├── development-plan.md      # Development roadmap (generated)
-│   └── TECH-DEBT.md             # Technical debt tracker
+│   └── references/              # Skill templates (copied during init)
+│       ├── dev-skill-template.md
+│       ├── code-review-template.md
+│       ├── tech-debt-template.md
+│       └── cross-check-template.md
 ├── .claude/
 │   └── skills/
 │       ├── start/               # Unified entry point
 │       ├── ideate/              # Idea capture skill
-│       ├── init-project/        # Bootstrap skill
-│       ├── code-review/         # Code quality skill
-│       ├── tech-debt/           # Debt management skill
-│       └── cross-check/         # Compliance skill
+│       └── init-project/        # Bootstrap skill
 └── aidlc-workflows/             # AWS AI-DLC rules
     └── aidlc-rules/
         ├── aws-aidlc-rules/     # Core workflow
         └── aws-aidlc-rule-details/  # Stage details
 ```
+
+After running `/init-project`, your project will have:
+- `.claude/skills/dev-{project}/` - Project-specific development skill
+- `.claude/skills/code-review/` - Code quality checks
+- `.claude/skills/tech-debt/` - Debt management
+- `.claude/skills/cross-check/` - Requirements compliance
 
 ## Feedback Loop
 

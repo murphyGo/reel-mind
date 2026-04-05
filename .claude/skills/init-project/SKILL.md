@@ -352,12 +352,17 @@ Create `.claude/skills/dev-{project}/SKILL.md`:
   - Language-specific best practices section
   - Project-specific file paths
 
-### Step 10: Copy Common Skills
+### Step 10: Generate Common Skills from Templates
 
-Ensure these skills exist (copy from templates if needed):
-- `.claude/skills/code-review/SKILL.md`
-- `.claude/skills/tech-debt/SKILL.md`
-- `.claude/skills/cross-check/SKILL.md`
+Copy skill templates from `docs/references/` to `.claude/skills/`:
+
+| Template | Destination |
+|----------|-------------|
+| `docs/references/code-review-template.md` | `.claude/skills/code-review/SKILL.md` |
+| `docs/references/tech-debt-template.md` | `.claude/skills/tech-debt/SKILL.md` |
+| `docs/references/cross-check-template.md` | `.claude/skills/cross-check/SKILL.md` |
+
+These skills are generic and work with any project that follows the AI-DLC structure.
 
 ### Step 11: Create CLAUDE.md
 
