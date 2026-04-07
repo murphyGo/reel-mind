@@ -90,18 +90,39 @@ Automatic status check before starting development:
    - `aidlc-docs/inception/plans/execution-plan.md` — check which construction stages apply
    - `aidlc-docs/aidlc-state.md` — current state, enabled extensions
 
-3. **Parse Plan**:
-   - AIDLC Construction Stages table (which stages apply to this project)
-   - Current status table (component completion status)
-   - All Phases and sub-tasks
+3. **Parse Plan** (supports both Unit-centric and Phase-centric layouts):
+
+   **Unit-centric plan** (has `## Unit:` sections):
+   - Unit Overview table (units, stories, construction stages, design artifacts, status)
+   - Per-unit sub-tasks with checkbox status
+   - Cross-Unit integration tasks
+
+   **Phase-centric plan** (fallback, has `## Phase N:` sections):
+   - Construction Stages table
+   - Current status table (component status)
+   - Per-phase sub-tasks with checkbox status
+
+   For both formats:
    - Checkbox status: `[x]` = complete, `[ ]` = incomplete
+   - Note **AIDLC Design** path for the current unit/phase (e.g., `aidlc-docs/construction/{unit-name}/`)
+   - Note story mappings (e.g., `→ US-001`, `→ FR-003`)
 
 4. **Find Next Development Target** (scan top to bottom):
-   - Skip fully checked `[x]` Phases/sub-tasks
+   - Skip fully checked `[x]` units/phases/sub-tasks
    - Skip items marked "deferred" or "— *deferred*"
    - Select **first sub-task** with at least one unchecked `[ ]` item
    - For mixed-status sub-tasks, target only unchecked items
-   - **AIDLC check**: If the target task requires a construction design stage (Functional Design, NFR, etc.) per the execution plan, and that stage hasn't been completed for the relevant unit, prompt the user to complete it first
+   - **AIDLC check**: If the target unit has construction design stages listed (e.g., Functional Design, NFR) and corresponding artifacts don't exist in `aidlc-docs/construction/{unit-name}/`, prompt the user:
+     ```
+     ⚠️ AIDLC Design Stage Pending
+
+     Unit "{unit-name}" requires Functional Design before code generation
+     (per execution-plan.md), but no design artifacts found.
+
+     Options:
+     - **design**: Run AIDLC design stages for this unit first
+     - **skip**: Proceed without formal design (acknowledge in audit.md)
+     ```
 
 ### Step 3: Present Development Target
 
@@ -110,8 +131,10 @@ Present identified sub-task in this format:
 ```
 ## Next Development Target
 
-**Phase**: [Phase number and name]
+**Unit**: [unit-name] (or "single-unit" if phase-centric plan)
 **Sub-task**: [Sub-task number and title]
+**Story**: [US-XXX or FR-XXX mapping, if any]
+**AIDLC Design**: [path to design artifacts, if applicable]
 
 ### Items to Develop:
 - [ ] Item 1 description
@@ -282,28 +305,28 @@ After documentation:
    - Mark completed items with `[x]`
    - When all items in a sub-task are complete, consider sub-task header complete
 
-2. **Update Current Status Table**:
+2. **Update Status** (Unit Overview table or Current Status table):
    - `✅ Complete` - All related sub-tasks complete
    - `🔄 In Progress` - Some sub-tasks complete
-   - `❌ Missing` - No sub-tasks started
+   - `❌ Not Started` - No sub-tasks started
 
 3. **Suggest Additions** (if applicable):
    - If additional needs discovered during implementation, suggest new sub-task
-   - Format: "Suggested addition to Phase X: [description]"
+   - Format: "Suggested addition to Unit {name} / Phase X: [description]"
 
-4. **Phase Completion Auto-Actions** (if Phase just completed):
-   - Detect: All sub-tasks in current Phase are now `[x]`
+4. **Unit/Phase Completion Auto-Actions** (if all sub-tasks in a Unit or Phase just completed):
+   - Detect: All sub-tasks in current Unit/Phase are now `[x]`
    - Prompt user for cross-check:
      ```
-     🎉 Phase [N] Complete!
+     🎉 Unit "{unit-name}" / Phase [N] Complete!
 
-     All sub-tasks in Phase [N] are now complete.
+     All sub-tasks are now complete.
      Run cross-check against specs now? (yes/no/later)
      ```
-   - **yes**: Execute `/cross-check` for the completed phase:
-     - Verify implementation vs specs
+   - **yes**: Execute `/cross-check` for the completed unit/phase:
+     - Verify implementation vs specs and AIDLC design artifacts
      - Generate compliance matrix
-     - Create `docs/cross-checks/phase-N-[name].md`
+     - Create `docs/cross-checks/{unit-name or phase-N}-[name].md`
      - Report any gaps found:
        ```
        Cross-Check Results:

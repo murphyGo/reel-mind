@@ -890,16 +890,23 @@ Generate `docs/DESIGN.md`:
 
 ### Step 16.2: Create development-plan.md
 
-**Document Relationship**: `docs/development-plan.md` is the tactical task tracker derived from the strategic `aidlc-docs/inception/plans/execution-plan.md`. The execution plan defines *which AIDLC stages to run and why*; the development plan defines *what implementation tasks to do and when*.
+**Document Relationship**: `docs/development-plan.md` is the tactical task tracker derived from `aidlc-docs/inception/plans/execution-plan.md`. The execution plan defines *which AIDLC stages to run and why* (strategy); the development plan defines *what to implement and when* (tactics). They are NOT duplicates — execution-plan stays read-only after inception, development-plan is the living document updated during construction.
+
+**Unit-centric organization**:
+- If `unit-of-work.md` exists → organize by **Unit** (primary axis), with phases inside each unit
+- If no units → organize by **Phase** (Foundation → Core → Polish) as fallback
+- Each sub-task includes its **AIDLC Unit** and **design artifacts path** for traceability
 
 **Enhanced with AI-DLC outputs**:
-- If `aidlc-docs/inception/plans/execution-plan.md` exists, use its Construction phase decisions to structure development phases
-- If `aidlc-docs/inception/application-design/unit-of-work.md` exists, create one development phase per unit of work
-- If `aidlc-docs/inception/application-design/components.md` exists, populate the component status table from actual components
-- If `aidlc-docs/inception/user-stories/stories.md` exists, map development tasks to user stories
-- **Include AIDLC Construction stages** as the framework for development phases (see execution-plan for which stages apply)
+- `execution-plan.md` → construction stage decisions (which stages apply per unit)
+- `unit-of-work.md` → unit definitions and dependencies
+- `components.md` → component status table
+- `stories.md` → task-to-story mapping
+- `unit-of-work-story-map.md` → which stories belong to which unit
 
 Generate `docs/development-plan.md`:
+
+**When Units exist** (multi-unit project):
 
 ```markdown
 # Development Plan: {Project Name}
@@ -907,16 +914,97 @@ Generate `docs/development-plan.md`:
 *Generated on {date}*
 *Strategy: aidlc-docs/inception/plans/execution-plan.md*
 
-## AIDLC Construction Stages (from execution plan)
+## Unit Overview
+
+| Unit | Stories | Construction Stages | Design Artifacts | Status |
+|------|---------|-------------------|------------------|--------|
+| {unit-name} | US-001, US-002 | FD, NFR-R, NFR-D, CG, BT | `aidlc-docs/construction/{unit-name}/` | ❌ Not Started |
+| {unit-name-2} | US-003 | CG, BT | `aidlc-docs/construction/{unit-name-2}/` | ❌ Not Started |
+
+*FD=Functional Design, NFR-R=NFR Requirements, NFR-D=NFR Design, ID=Infrastructure Design, CG=Code Generation, BT=Build and Test*
+
+---
+
+## Unit: {unit-name}
+
+**AIDLC Design**: `aidlc-docs/construction/{unit-name}/`
+**Stories**: US-001, US-002
+**Construction Stages**: Functional Design → NFR Requirements → NFR Design → Code Generation → Build and Test
+
+### {unit-name}.1 - {Task title} (→ US-001)
+- [ ] {Implementation item}
+- [ ] {Implementation item}
+- [ ] Add unit tests
+
+### {unit-name}.2 - {Task title} (→ US-002)
+- [ ] {Implementation item}
+- [ ] {Implementation item}
+- [ ] Add unit tests
+
+---
+
+## Unit: {unit-name-2}
+
+**AIDLC Design**: `aidlc-docs/construction/{unit-name-2}/`
+**Stories**: US-003
+**Construction Stages**: Code Generation → Build and Test
+
+### {unit-name-2}.1 - {Task title} (→ US-003)
+- [ ] {Implementation item}
+- [ ] {Implementation item}
+- [ ] Add unit tests
+
+---
+
+## Cross-Unit: Integration & Polish
+
+### integration.1 - Cross-unit integration
+- [ ] Integration between {unit-name} and {unit-name-2}
+- [ ] Integration tests
+
+### polish.1 - Error Handling & Edge Cases
+- [ ] Implement error handling patterns
+- [ ] Handle edge cases
+
+### polish.2 - Documentation & Cleanup
+- [ ] Update API documentation
+- [ ] Final testing
+
+---
+
+## Progress Tracking
+
+| Unit | Tasks | Complete | Progress |
+|------|-------|----------|----------|
+| {unit-name} | X | 0 | 0% |
+| {unit-name-2} | Y | 0 | 0% |
+| Cross-Unit | Z | 0 | 0% |
+
+---
+
+*This plan is updated automatically by `/dev-{name}` as tasks are completed.*
+```
+
+**When no Units exist** (single-unit / simple project, fallback):
+
+```markdown
+# Development Plan: {Project Name}
+
+*Generated on {date}*
+*Strategy: aidlc-docs/inception/plans/execution-plan.md*
+
+## Construction Stages (from execution plan)
 
 | Stage | Applies | Notes |
 |-------|---------|-------|
-| Functional Design | [Yes/No] | [from execution-plan decision] |
-| NFR Requirements | [Yes/No] | [from execution-plan decision] |
-| NFR Design | [Yes/No] | [from execution-plan decision] |
-| Infrastructure Design | [Yes/No] | [from execution-plan decision] |
+| Functional Design | [Yes/No] | [reasoning] |
+| NFR Requirements | [Yes/No] | [reasoning] |
+| NFR Design | [Yes/No] | [reasoning] |
+| Infrastructure Design | [Yes/No] | [reasoning] |
 | Code Generation | Yes | Always required |
 | Build and Test | Yes | Always required |
+
+**AIDLC Design**: `aidlc-docs/construction/` (if design stages apply)
 
 ## Current Status
 
@@ -928,12 +1016,12 @@ Generate `docs/development-plan.md`:
 
 ## Phase 1: Foundation
 
-### 1.1 - {First task based on requirements}
+### 1.1 - {First task} (→ FR-001)
 - [ ] {Implementation item}
 - [ ] {Implementation item}
 - [ ] Add unit tests
 
-### 1.2 - {Second task}
+### 1.2 - {Second task} (→ FR-002)
 - [ ] {Implementation item}
 - [ ] {Implementation item}
 - [ ] Add unit tests
@@ -942,14 +1030,10 @@ Generate `docs/development-plan.md`:
 
 ## Phase 2: Core Features
 
-### 2.1 - {Feature from FR requirements}
+### 2.1 - {Feature} (→ FR-003)
 - [ ] {Implementation item}
 - [ ] {Implementation item}
 - [ ] Add integration tests
-
-### 2.2 - {Another feature}
-- [ ] {Implementation item}
-- [ ] {Implementation item}
 
 ---
 
@@ -958,11 +1042,9 @@ Generate `docs/development-plan.md`:
 ### 3.1 - Error Handling & Edge Cases
 - [ ] Implement error handling patterns
 - [ ] Handle edge cases
-- [ ] Add error recovery tests
 
 ### 3.2 - Documentation & Cleanup
 - [ ] Update API documentation
-- [ ] Code cleanup and refactoring
 - [ ] Final testing
 
 ---
