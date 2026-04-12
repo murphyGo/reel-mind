@@ -96,6 +96,41 @@ Or if you feel we have enough, just say "that's enough" and I'll draft the idea.
 
 **Wait for user response.**
 
+### Step 4.5: Smart Tech Suggestions
+
+If user has NOT specified technology preferences by this point, analyze the project type from prior dialogue and proactively suggest a stack.
+
+**Project type to stack mapping** (use as guidance, not rigid lookup):
+
+| Project Type Signals | Suggested Stack | Rationale |
+|---------------------|----------------|-----------|
+| REST API, CRUD, backend service | Go + Chi + sqlc + PostgreSQL | Lightweight, performant, type-safe |
+| Web app with UI, dashboard | TypeScript + React + Next.js + PostgreSQL | Full-stack, modern, rich ecosystem |
+| CLI tool, automation script | Go or Python | Fast builds (Go) or rapid dev (Python) |
+| Data pipeline, ML, analytics | Python + FastAPI + pandas | ML ecosystem, async support |
+| Mobile backend, real-time | TypeScript + NestJS + PostgreSQL + Redis | WebSocket support, structured |
+| Library, SDK, package | Match target ecosystem language | Must align with consumers |
+| Simple script, personal tool | Python | Fastest path to working code |
+
+**Present as suggestion, not mandate:**
+
+```
+Based on what you've described ([detected signals]), I'd suggest:
+- **Language**: [choice] — [one-line rationale]
+- **Framework**: [choice] — [one-line rationale]
+- **Database**: [choice if applicable] — [one-line rationale]
+
+Would you like to go with these, discuss alternatives, or specify your own?
+```
+
+| Response | Action |
+|----------|--------|
+| Accepts suggestion | Record in Tech Preferences section of draft |
+| "discuss" / asks questions | Compare 2-3 alternatives with trade-offs, re-prompt |
+| Specifies own stack | Use their choice, no further suggestions |
+| "I don't know" / unsure | Use suggested defaults, note as "Suggested — revisit during /init-project" |
+| Already specified tech | Skip this step entirely |
+
 ### Step 5: Handle User Responses
 
 | User Response | Action |

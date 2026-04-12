@@ -4,10 +4,10 @@ Bootstrap a new project from an idea to AI-DLC specs and dev skills.
 
 ## Arguments
 
-- `$ARGUMENTS` - (optional) Path to idea file. If not provided, checks in order:
-  1. `IDEA.md` (primary)
-  2. `docs/PROJECT-VISION.md` (secondary)
-  3. `docs/inception.md` (legacy fallback)
+- `$ARGUMENTS` - (optional):
+  - (empty) - Full 3-stage initialization with path fallback: `IDEA.md` → `docs/PROJECT-VISION.md` → `docs/inception.md`
+  - `quick` or `--quick` - Fast-track mode for prototypes/hackathons (skips user stories, workflow planning, app design, units, NFR analysis)
+  - Path to custom idea file - Use the specified file as input
 
 ## Objective
 
@@ -63,6 +63,162 @@ Transform a rough idea in inception.md into:
 
    Let's begin by understanding your idea...
    ```
+
+---
+
+## Quick Mode Branch
+
+**Trigger**: `$ARGUMENTS` contains `quick` or `--quick`.
+
+When quick mode is triggered, execute this streamlined path **instead of** Stage 0, Stage 1, and Stage 2 below. Step 0 (validation, common rules load) still runs first.
+
+**Target audience**: Prototypes, hackathons, personal scripts, single-session experiments.
+
+**What is skipped**: User stories, workflow planning, application design, units generation, extension opt-in, NFR analysis, audit log, refinement-questions file, DESIGN.md, TECH-DEBT.md, code-review/tech-debt/cross-check skills.
+
+**What is kept**: Idea analysis, lightweight requirements, minimal AI-DLC state, dev skill, CLAUDE.md, README.md.
+
+### Quick Step 1: Read and Analyze Idea
+
+Same as full-mode Step 1 — read IDEA.md, extract project name, vision, core features, tech preferences, constraints.
+
+### Quick Step 2: Rapid Refinement (1 round max)
+
+Present a condensed analysis:
+
+```
+## Quick Analysis
+
+I've read your idea. Here's what I see:
+
+**Core concept**: [1-2 sentence summary]
+
+**Quick questions** (answer any, or say "skip"):
+1. [Most critical missing piece — usually target user or core constraint]
+2. [Second most critical — usually tech preference if not specified]
+
+Or say **"go"** to proceed with what we have.
+```
+
+| Response | Action |
+|----------|--------|
+| Answers questions | Incorporate, proceed to Quick Step 3 |
+| "skip" / "go" | Proceed with reasonable defaults to Quick Step 3 |
+
+**No second round.** Accept whatever the user gives. Fill gaps with smart defaults (apply the Tech Stack Recommendation logic from Step 3 if tech unspecified).
+
+### Quick Step 3: Generate Lightweight Requirements
+
+Create `docs/requirements.md` with simplified structure:
+
+```markdown
+# Project Requirements: {Project Name}
+
+*Generated via quick mode on {YYYY-MM-DD}*
+
+## Overview
+
+[Problem + target users in 2-3 sentences]
+
+## Features
+
+| # | Feature | Priority | Notes |
+|---|---------|----------|-------|
+| 1 | [feature] | Must-have | [brief] |
+| 2 | [feature] | Must-have | [brief] |
+| 3 | [feature] | Should-have | [brief] |
+
+## Technical Decisions
+
+| Component | Choice | Rationale |
+|-----------|--------|-----------|
+| Language | [choice or smart default] | [why] |
+| Framework | [choice or smart default] | [why] |
+| Database | [choice or "TBD"] | [why] |
+
+## Constraints
+
+- [Any mentioned constraints, or "None specified"]
+
+## Out of Scope
+
+- [Anything explicitly deferred]
+```
+
+### Quick Step 4: Generate Minimal AI-DLC State
+
+Create `aidlc-docs/aidlc-state.md` with simplified tracking:
+
+```markdown
+# AI-DLC State (Quick Mode)
+
+## Project Information
+- **Project Name**: {name}
+- **Project Type**: Greenfield (Quick)
+- **Start Date**: {YYYY-MM-DD}
+- **Mode**: Quick — simplified inception, direct to construction
+
+## Stage Progress
+
+| Stage | Status |
+|-------|--------|
+| Requirements | ✅ Complete (quick) |
+| Code Generation | ⏳ Pending |
+| Build and Test | ⏳ Pending |
+
+## Notes
+
+- Generated via `/init-project --quick`
+- To upgrade to full AI-DLC (user stories, app design, units), run `/init-project` — existing requirements.md will be preserved and enhanced.
+```
+
+Do not create audit.md, refinement-questions.md, refinement-log.md, vision.md, tech-env.md, or any `aidlc-docs/inception/` subdirectories.
+
+### Quick Step 5: Generate Dev Skill
+
+Same as full-mode Step 14 — create `.claude/skills/dev-{project}/SKILL.md` from `docs/references/dev-skill-template.md`. Customize project name and tech stack commands.
+
+The dev skill reads `aidlc-state.md` and handles missing units by treating the whole project as a single implicit unit.
+
+### Quick Step 6: Generate Essential Files
+
+Create only:
+- `CLAUDE.md` — shortened version (Quick Commands table + Key Files table + Tech Stack)
+- `README.md` — same as full-mode Step 16.3
+
+**Skip**: DESIGN.md, TECH-DEBT.md, code-review skill, tech-debt skill, cross-check skill.
+
+### Quick Step 7: Summary
+
+```
+## Quick Initialization Complete
+
+**Project**: {name}
+**Mode**: Quick (prototype/hackathon)
+
+### Created
+- docs/requirements.md (lightweight)
+- aidlc-docs/aidlc-state.md (minimal tracking)
+- .claude/skills/dev-{name}/SKILL.md
+- CLAUDE.md
+- README.md
+
+### Skipped (available via full `/init-project`)
+- Detailed NFR analysis
+- User stories
+- Application design artifacts
+- Code review / tech-debt / cross-check skills
+- Extension opt-in (security, testing)
+
+### Next Steps
+1. Run `/dev-{name}` to start building
+2. Run `/scaffold` to generate directory structure and config files
+3. Run `/init-project` later to upgrade to full AI-DLC (requirements.md will be preserved)
+
+Your project is ready — go build!
+```
+
+**End of Quick Mode Branch.** Do NOT proceed to Stage 0.
 
 ---
 
@@ -155,6 +311,41 @@ I've analyzed your idea. Here's my understanding and suggestions:
 | Performance | ✅/⚠️/❌ | [Brief assessment] |
 | Security | ✅/⚠️/❌ | [Brief assessment] |
 | Monitoring | ✅/⚠️/❌ | [Brief assessment] |
+
+### Tech Stack Recommendation
+
+If `docs/requirements.md` Section 4 (Technical Decisions) is empty, marked "TBD", or IDEA.md had no tech preferences, generate a recommendation based on functional requirements.
+
+**Analysis inputs**:
+- Project type (API, web app, CLI, library, etc.) from FR analysis
+- Scale indicators (single user, team, enterprise) from NFR analysis
+- Data complexity (simple CRUD, relationships, time-series, etc.)
+- Real-time requirements (WebSocket, streaming, polling)
+- Team/user preference signals from IDEA.md
+
+**Present as**:
+
+```
+### Tech Stack Suggestion
+
+Based on your requirements:
+- [Signal 1 from requirements]
+- [Signal 2 from requirements]
+
+| Component | Recommendation | Alternative | Trade-off |
+|-----------|---------------|-------------|-----------|
+| Language | [choice] | [alt] | [brief comparison] |
+| Framework | [choice] | [alt] | [brief comparison] |
+| Database | [choice] | [alt] | [brief comparison] |
+| Infrastructure | [choice] | [alt] | [brief comparison] |
+
+Options:
+- **accept** — Use these recommendations
+- **discuss [component]** — Explore alternatives for a specific choice
+- **specify** — Provide your own tech stack
+```
+
+If tech decisions are already present in requirements.md and reasonable, skip this block and reference the existing choices.
 
 ### Questions for You
 

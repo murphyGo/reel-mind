@@ -29,6 +29,7 @@ If `$ARGUMENTS` is provided:
 | `ideate` | Go to `/ideate` |
 | `adopt` | Go to `/adopt` |
 | `init` | Go to `/init-project` |
+| `scaffold` | Go to `/scaffold` |
 | `dev` | Go to Development Options |
 | `status` | Go to Step 3 (show status only) |
 
@@ -46,8 +47,14 @@ Check 1: Development Ready?
 
 Check 2: Initialized?
 ├── Look for: aidlc-docs/ directory with content
-├── If found: State = "initialized"
-└── If not: Continue
+├── If found: Continue to Check 2.5 (refine to scaffold vs initialized)
+└── If not: Continue to Check 3
+
+Check 2.5: Has Specs But No Code? (only if Check 2 matched)
+├── Look for: docs/requirements.md exists
+│   AND source directories (src/, cmd/, lib/, app/, pkg/) are absent or empty
+├── If yes: State = "needs-scaffold"
+└── If no: State = "initialized"
 
 Check 3: Has Idea?
 ├── Look for: IDEA.md OR docs/PROJECT-VISION.md OR docs/inception.md
@@ -118,6 +125,34 @@ Shall I run `/init-project` now? (yes/no)
 ```
 
 If yes, invoke `/init-project`.
+
+#### State: `needs-scaffold`
+
+```
+## Specs Ready — Project Needs Structure
+
+AI-DLC specs and requirements are generated. Next step: create the project structure.
+
+### Current Status
+- Requirements: docs/requirements.md ✅
+- AI-DLC Specs: aidlc-docs/ ✅
+- Project Code: Not yet created
+
+### Next Step
+Run `/scaffold` to generate project directories and config files based on your tech stack.
+
+Options:
+- **scaffold** — Run `/scaffold` now (recommended)
+- **skip** — Go directly to `/dev-{name}` without scaffolding
+- **preview** — See what `/scaffold` would create
+```
+
+Handle responses:
+| Response | Action |
+|----------|--------|
+| "scaffold" / "yes" | Invoke `/scaffold` |
+| "skip" | Show dev skill options (same as `development` state) |
+| "preview" | Invoke `/scaffold preview` |
 
 #### State: `has-idea`
 

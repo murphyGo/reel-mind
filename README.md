@@ -126,10 +126,20 @@ Creates project-specific automation:
 | `/start` | Unified entry point - auto-detects state and routes |
 | `/ideate` | Capture lightning idea through guided dialogue |
 | `/adopt` | Onboard existing codebase into AI-DLC workflow |
-| `/init-project` | Bootstrap new project from idea |
+| `/init-project` | Bootstrap new project from idea (add `--quick` for fast-track) |
+| `/scaffold` | Generate project structure from specs |
 | `/code-review git` | Review changed files for issues |
 | `/tech-debt` | View/manage technical debt |
 | `/cross-check` | Verify implementation vs requirements |
+
+## Example
+
+See [`examples/book-tracker/`](examples/book-tracker/README.md) for a complete walkthrough from rough idea to project-ready state:
+
+1. **Raw idea**: "I want to build something that helps me track my reading habits"
+2. **After `/ideate`**: Structured IDEA.md with problem, features, suggested tech
+3. **After `/init-project`**: 6 functional requirements, Go + Chi + PostgreSQL decisions, AI-DLC inception artifacts
+4. **After `/scaffold`**: Directories and config files ready for development
 
 ## Project Structure
 
@@ -215,6 +225,15 @@ The system supports continuous improvement:
          ▼
 ┌─────────────────┐
 │  aidlc-docs/    │  Complete specifications
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│   /scaffold     │  Directories + config files
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
 │  /dev-{name}    │  Project automation
 └─────────────────┘
 ```
