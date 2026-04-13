@@ -1,0 +1,43 @@
+# Global defaults for Reel-Mind.
+# Per-channel overrides live in the Supabase `channels` table.
+# Secrets live exclusively in GitHub Actions encrypted secrets — never here.
+
+channel_defaults:
+  language: ko
+  timezone: Asia/Seoul
+  platform: youtube_shorts
+  approval_mode: required          # required | optional | off
+  approval_timeout_hours: 24       # only used when approval_mode == optional
+  posting_schedule_cron_kst:       # KST; GHA converts to UTC per workflow
+    - "0 8 * * *"
+    - "0 13 * * *"
+    - "0 18 * * *"
+  warmup:
+    enabled: true
+    duration_days: 14
+    videos_per_day: 1
+  style_profile_cadence_cron_kst: "0 3 * * *"   # daily style-study
+  measure_cadence_cron_kst: "30 2 * * *"        # daily metrics
+  generative_video_budget_cap_usd: 20
+  fallback_to_asset_assembly_on_budget_breach: true
+
+models:
+  creative: claude-opus-4-6
+  mechanical: claude-haiku-4-5-20251001
+
+retry:
+  max_attempts: 3
+  base_delay_seconds: 1.0
+  max_delay_seconds: 30.0
+  jitter: true
+
+observability:
+  stale_channel_multiplier: 2      # (2 x posting_schedule_gap) -> "stale"
+  alert_severities_paged: [critical, high]
+
+r2:
+  presigned_url_ttl_seconds: 900
+
+runtime:
+  gha_single_job_budget_minutes: 330   # 5.5h; offload above this
+  heavy_render_offload_backend: null   # modal | runpod | null (stub)

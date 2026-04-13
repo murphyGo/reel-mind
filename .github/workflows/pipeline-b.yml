@@ -1,0 +1,68 @@
+# Pipeline B — Content Production
+# Fans out per posting slot per active channel.
+# STUB: scheduling + channel discovery finalized in U8.
+
+name: pipeline-b-production
+
+on:
+  schedule:
+    - cron: "0 23 * * *"  # 08:00 KST
+    - cron: "0 4 * * *"   # 13:00 KST
+    - cron: "0 9 * * *"   # 18:00 KST
+  workflow_dispatch:
+    inputs:
+      channel_id:
+        description: "Single channel ID (optional)"
+        required: false
+        type: string
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    outputs:
+      channels: ${{ steps.list.outputs.channels }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+        with:
+          python-version: "3.12"
+      - run: uv sync
+      - id: list
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          CHANNEL_OVERRIDE: ${{ inputs.channel_id }}
+        run: uv run reel-mind discover-channels --pipeline b  # TODO: implement in U8
+
+  run:
+    needs: discover
+    runs-on: ubuntu-latest
+    timeout-minutes: 330   # per config/defaults.yaml runtime.gha_single_job_budget_minutes
+    strategy:
+      fail-fast: false
+      matrix:
+        channel: ${{ fromJson(needs.discover.outputs.channels) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+        with:
+          python-version: "3.12"
+      - name: Install ffmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - run: uv sync
+      - name: Run Pipeline B
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY: ${{ secrets.R2_ACCESS_KEY }}
+          R2_SECRET_KEY: ${{ secrets.R2_SECRET_KEY }}
+          R2_BUCKET: ${{ secrets.R2_BUCKET }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_OPERATOR_CHAT_ID: ${{ secrets.TELEGRAM_OPERATOR_CHAT_ID }}
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          # Per-channel tokens resolved by SecretsProvider via naming convention.
+          CHANNEL_ID: ${{ matrix.channel }}
+        run: uv run reel-mind run-pipeline --pipeline b --channel "$CHANNEL_ID"  # TODO: implement in U4/U8

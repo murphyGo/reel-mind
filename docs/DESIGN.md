@@ -1,304 +1,108 @@
-# Design Document: AI-DLC Starter
+# Design Document: Reel-Mind
+
+*Generated on 2026-04-13*
+*Source of truth: `aidlc-docs/inception/application-design/`*
 
 ## Overview
 
-AI-DLC Starter is a meta-template that transforms rough ideas into fully-specified, development-ready projects through Claude-powered interactive refinement and AWS AI-DLC methodology.
-
----
+Reel-Mind is an autonomous short-form video content factory. It decomposes the lifecycle into three independently-scheduled Python pipelines — **A: Style Study**, **B: Content Production**, **C: Measure & Learn** — each driven by a single long-running Claude Agent SDK session per run. Pipelines communicate only through persisted artifacts: **Supabase** rows and **Cloudflare R2** blobs. A **Next.js Web UI** (Vercel) and a **Telegram bot** sit on top of the shared state for observability, approval, and configuration.
 
 ## Architecture
 
-### High-Level Flow
+### High-Level Design
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                      ENTRY POINT                                 │
-│              /start → auto-detects state and routes              │
-└─────────────────────────────┬───────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                  PRE-INCEPTION: IDEA CAPTURE                     │
-│  ┌─────────────┐    ┌─────────────┐    ┌─────────────────────┐  │
-│  │   /ideate   │───▶│  Dialogue   │───▶│     IDEA.md         │  │
-│  │   skill     │    │   Loop      │    │    (created)        │  │
-│  └─────────────┘    └─────────────┘    └─────────────────────┘  │
-└─────────────────────────────┬───────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                   STAGE 0: INTERACTIVE REFINEMENT                │
-│  ┌─────────────┐    ┌─────────────┐    ┌─────────────────────┐  │
-│  │   Analyze   │───▶│   Suggest   │───▶│  Dialogue Loop      │  │
-│  │   Intent    │    │Improvements │    │  (until confirmed)  │  │
-│  └─────────────┘    └─────────────┘    └─────────────────────┘  │
-│                                                  │               │
-│                              ┌───────────────────┘               │
-│                              ▼                                   │
-│                    ┌─────────────────┐                          │
-│                    │ requirements.md │                          │
-│                    │ refinement-log  │                          │
-│                    └─────────────────┘                          │
-└─────────────────────────────┬───────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                   STAGE 1: SPEC GENERATION                       │
-│  ┌─────────────┐    ┌─────────────┐    ┌─────────────────────┐  │
-│  │ vision.md   │    │ tech-env.md │    │    AI-DLC Rules     │  │
-│  │ (AI-DLC)    │    │  (AI-DLC)   │    │    Execution        │  │
-│  └─────────────┘    └─────────────┘    └─────────────────────┘  │
-│                                                  │               │
-│                              ┌───────────────────┘               │
-│                              ▼                                   │
-│                    ┌─────────────────┐                          │
-│                    │   aidlc-docs/   │                          │
-│                    │   (full specs)  │                          │
-│                    └─────────────────┘                          │
-└─────────────────────────────┬───────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                   STAGE 2: SKILL GENERATION                      │
-│  ┌─────────────┐    ┌─────────────┐    ┌─────────────────────┐  │
-│  │/dev-{name}  │    │/code-review │    │  /tech-debt         │  │
-│  │  (custom)   │    │  (generic)  │    │  /cross-check       │  │
-│  └─────────────┘    └─────────────┘    └─────────────────────┘  │
-│                                                  │               │
-│                              ┌───────────────────┘               │
-│                              ▼                                   │
-│                    ┌─────────────────┐                          │
-│                    │   CLAUDE.md     │                          │
-│                    │ (project ready) │                          │
-│                    └─────────────────┘                          │
-└─────────────────────────────────────────────────────────────────┘
++-------------------+       +-------------------+       +-------------------+
+|   Pipeline A      |       |   Pipeline B      |       |   Pipeline C      |
+|   Style Study     |       |   Production      |       |   Measure + Learn |
++---------+---------+       +---------+---------+       +---------+---------+
+          |                           |                           |
+          v                           v                           v
++------------------------------------------------------------------------+
+|                         Shared Foundation (U1)                         |
+|      Supabase (rows)    +    R2 (artifacts)    +    CostLedger         |
++------------------------------------------------------------------------+
+          ^                           ^                           ^
+          |                           |                           |
++------------------------------------------------------------------------+
+|                       Adapter Framework (U2)                           |
+|  Source  |  TTS  |  StockMedia  |  GenerativeVideo  |  Publish         |
++------------------------------------------------------------------------+
+
+    +-------------------+       +-------------------+
+    |  Telegram Bot     |       |   Web UI          |
+    |  (U6)             |       |   Next.js (U7)    |
+    +-------------------+       +-------------------+
 ```
+
+### Components (summary)
+
+| Layer | Key Components | Unit |
+|-------|---------------|------|
+| Shared Foundation | ConfigLoader, SecretsProvider, SupabaseClient, R2Client, Logger, CostLedger, RunRecorder, IdempotencyGuard | U1 |
+| Adapter Framework | AdapterRegistry, SourceAdapter, GenerativeVideoAdapter, TTSAdapter, StockMediaAdapter, PublishAdapter, RetryPolicy | U2 |
+| Pipeline A | StyleStudyOrchestrator, SampleCollector, StyleExtractor, StyleProfileRepository | U3 |
+| Pipeline B | ContentProductionOrchestrator, TrendScout, VideoPlanner, BudgetGovernor, AssetAssemblyEngine, GenerativeSceneRouter, FfmpegComposer, ApprovalGate, PostingSchedulerGuard, Publisher | U4 |
+| Pipeline C | MeasureOrchestrator, MetricsIngestor, SignalUpdater | U5 |
+| Telegram Bot | AlertPublisher, ApprovalBot | U6 |
+| Web UI | AuthGate, ChannelsOverview, ApprovalQueueView, PipelineRunsTimeline, MetricsDashboardView, StyleProfileViewer, TrendCandidatesView, ConfigEditor, BudgetView | U7 |
+| Orchestration | pipeline-a/b/c.yml, SecretsLayout, HeavyRenderDispatcher (stub) | U8 |
+
+Full component list: `aidlc-docs/inception/application-design/components.md`.
+
+## Technical Decisions (AD-01..AD-10)
+
+| ID | Decision | Rationale |
+|----|----------|-----------|
+| AD-01 | GHA workflow-per-pipeline × matrix-over-channels | Minimal files; scales with channels via config |
+| AD-02 | One Claude Agent SDK session per pipeline run | Context continuity across stages |
+| AD-03 | Pipelines write-only to Supabase; Web UI reads + writes; no HTTP middle tier | Single shared state store, zero cross-layer coupling |
+| AD-04 | Approval state: pending → approved / rejected / edit_requested / timed_out | Handles edit-and-retry without a new pipeline concept |
+| AD-05 | Pre-flight cost estimate + post-call reconciliation; fallback to asset-assembly on projected overage | Avoids surprise overruns; preserves publishing |
+| AD-06 | Retries live inside adapters (exp backoff + jitter + max 3) | Keeps pipelines clean |
+| AD-07 | R2 permanent retention | Cheap; enables cross-posting and re-upload |
+| AD-08 | Per-channel config in Supabase; global defaults in `config/defaults.yaml`; secrets only in GHA | Operator-editable behavior + least-privilege credentials |
+| AD-09 | Opus 4.6 for creative stages, Haiku 4.5 for mechanical | Cost/quality balance |
+| AD-10 | `run_id = hash(channel_id, pipeline, scheduled_slot)` | Idempotent retries; no double-publish |
+
+## Data Model (sketch)
+
+See `aidlc-docs/inception/application-design/application-design.md` §"Core data entities" for the 12-entity list. Finalized schema lands in U1 Functional Design / Infrastructure Design.
+
+## API Design
+
+No public HTTP API. Internal contracts:
+- Adapters conform to `AdapterRegistry` interfaces.
+- Pipeline ↔ Pipeline communication is via Supabase rows (schema-validated).
+- Web UI uses Supabase client SDK with RLS; no custom backend.
+
+## Non-Functional Considerations
+
+### Performance
+- Per-run latency tolerates seconds to minutes; pipelines are batch.
+- GHA 6h per-job ceiling respected; heavy renders offload to Modal/Runpod when projected to exceed.
+
+### Security (Security Baseline — blocking)
+- Per-channel-keyed GHA secrets; never in DB or repo.
+- Supabase RLS on all tables; service-role key used only by pipelines.
+- R2 private bucket; presigned URLs (15-min TTL) for Web UI previews.
+- Telegram bot restricted to whitelisted `operator_chat_id`.
+- OAuth refresh flow; refresh failures page operator.
+
+### Observability
+- Every run writes `pipeline_runs` + per-stage `pipeline_stages` rows.
+- `cost_ledger` entries for every paid call.
+- Telegram alerts on failure and kill-switch events within 5 minutes.
+- Web UI surfaces stale-channel detection (no successful B run within `2 × schedule_gap`).
+
+### Scalability
+- Multi-channel via GHA matrix; no code change to add a channel.
+- Pipelines are stateless between runs; state is Supabase + R2.
+
+### Reproducibility (PBT — blocking)
+- Deterministic `run_id` + immutable `StyleProfile` versions + `plan_hash` per video plan.
+- Property tests target `IdempotencyGuard`, `CostLedger`, `BudgetGovernor`, `ApprovalGate` state transitions, plan/profile serializers.
 
 ---
 
-## Core Components
-
-### 1. Interactive Refinement Engine
-
-**Purpose**: Transform rough ideas into structured requirements through dialogue.
-
-**Design Decisions**:
-
-| Decision | Choice | Rationale |
-|----------|--------|-----------|
-| Refinement approach | Iterative dialogue | Users often don't know what they need until they see suggestions |
-| Suggestion format | Structured with categories | Makes it easy to accept/reject individual items |
-| Confirmation model | Explicit "proceed" | Prevents premature advancement |
-
-**Analysis Categories**:
-- Completeness (missing features, edge cases)
-- Clarity (ambiguous requirements)
-- Feasibility (technical complexity)
-- Architecture (component structure)
-- Non-Functional (performance, security, scalability)
-
-### 2. AI-DLC Integration
-
-**Purpose**: Generate comprehensive specifications using proven methodology.
-
-**Design Decisions**:
-
-| Decision | Choice | Rationale |
-|----------|--------|-----------|
-| Rule storage | Local copy in repo | Self-contained, version controlled |
-| Input format | vision.md + tech-env.md | Standard AI-DLC format |
-| Output location | aidlc-docs/ | Follows AI-DLC convention |
-
-**AI-DLC Phases Used**:
-- Inception: Requirements, user stories, application design
-- Construction: Functional design, NFRs, build plans
-
-### 3. Skill System
-
-**Purpose**: Provide executable automation for development workflow.
-
-**Design Decisions**:
-
-| Decision | Choice | Rationale |
-|----------|--------|-----------|
-| Skill format | Markdown with structured sections | Human-readable, Claude-parseable |
-| Skill location | .claude/skills/{name}/SKILL.md | Standard Claude Code convention |
-| Common vs custom | Templates + generated | Reuse patterns, customize per project |
-
-**Skill Categories**:
-
-| Category | Skills | Customization |
-|----------|--------|---------------|
-| Entry | /start | None (template) |
-| Ideation | /ideate | None (template) |
-| Bootstrap | /init-project | None (template) |
-| Development | /dev-{name} | Generated per project |
-| Quality | /code-review | Template (language detection) |
-| Tracking | /tech-debt, /cross-check | Template (path customization) |
-
----
-
-## Data Flow
-
-### Input Documents
-
-```
-IDEA.md (user creates via /ideate or manually)
-    │
-    ├── One-Liner
-    ├── The Problem
-    ├── Core Features
-    ├── Tech Preferences (optional)
-    └── Notes (optional)
-```
-
-### Generated Documents
-
-```
-docs/
-├── requirements.md      ← Stage 0 output (enhanced requirements)
-├── refinement-log.md    ← Stage 0 output (dialogue record)
-├── vision.md            ← Stage 1 input (AI-DLC format)
-├── tech-env.md          ← Stage 1 input (AI-DLC format)
-└── TECH-DEBT.md         ← Initialized template
-
-aidlc-docs/              ← Stage 1 output (AI-DLC generates)
-├── inception/
-│   ├── requirements/
-│   ├── user-stories/
-│   └── application-design/
-└── construction/
-    ├── functional-design/
-    └── nfr-requirements/
-
-.claude/skills/          ← Stage 2 output
-├── dev-{name}/SKILL.md  ← Project-specific
-├── code-review/SKILL.md ← Template
-├── tech-debt/SKILL.md   ← Template
-└── cross-check/SKILL.md ← Template
-```
-
----
-
-## Feedback Loop Design
-
-### Continuous Improvement Mechanisms
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                     DEVELOPMENT CYCLE                        │
-│                                                              │
-│  /dev-{name}  ──────▶  Implementation  ──────▶  /code-review│
-│       │                      │                       │       │
-│       │                      ▼                       │       │
-│       │              Session Log Created             │       │
-│       │                      │                       │       │
-│       ▼                      ▼                       ▼       │
-│  ┌─────────┐         ┌─────────────┐         ┌──────────┐   │
-│  │ Plan    │◀────────│ TECH-DEBT   │◀────────│ Issues   │   │
-│  │ Update  │         │ Tracking    │         │ Found    │   │
-│  └─────────┘         └─────────────┘         └──────────┘   │
-│       │                      │                              │
-│       │                      ▼                              │
-│       │              Phase Complete?                        │
-│       │                      │                              │
-│       │                     YES                             │
-│       │                      │                              │
-│       │                      ▼                              │
-│       │              /cross-check                           │
-│       │                      │                              │
-│       │                      ▼                              │
-│       └──────────────  Gap Analysis  ───────────────────────│
-│                              │                              │
-│                              ▼                              │
-│                    New Tasks Added                          │
-└─────────────────────────────────────────────────────────────┘
-```
-
-### Traceability
-
-| Artifact | Purpose | Created By |
-|----------|---------|------------|
-| Session logs | Record of each dev session | /dev-{name} |
-| Refinement log | Dialogue during refinement | /init-project |
-| Cross-check reports | Compliance verification | /cross-check |
-| TECH-DEBT entries | Issue tracking | /code-review, manual |
-
----
-
-## Design Principles
-
-### 1. Human in the Loop
-
-- No automatic commits without approval
-- Interactive refinement requires explicit confirmation
-- Suggestions presented, not imposed
-
-### 2. Progressive Enhancement
-
-- Start with rough idea
-- Incrementally add structure
-- Each stage builds on previous
-
-### 3. Traceability
-
-- Every decision logged
-- Requirements linked to implementation
-- Gaps tracked and actioned
-
-### 4. Language Agnostic
-
-- Skills detect language automatically
-- Templates work for any tech stack
-- AI-DLC rules are framework-independent
-
-### 5. Self-Contained
-
-- All rules included in repo
-- No external dependencies beyond Claude
-- Version controlled alongside code
-
----
-
-## Extension Points
-
-### Adding New Skills
-
-1. Create `.claude/skills/{name}/SKILL.md`
-2. Follow standard structure (Arguments, Objective, Steps)
-3. Document in CLAUDE.md
-
-### Customizing Refinement
-
-Modify analysis categories in `/init-project`:
-- Add domain-specific checks
-- Adjust suggestion format
-- Change dialogue patterns
-
-### Integrating Additional AI-DLC Extensions
-
-Add to `aidlc-workflows/aidlc-rules/aws-aidlc-rule-details/extensions/`:
-- Security rules
-- Testing rules
-- Compliance rules
-
----
-
-## Limitations
-
-| Limitation | Mitigation |
-|------------|------------|
-| Skills are text-based, not executable | Claude interprets and executes |
-| No IDE integration | Works in any terminal with Claude |
-
----
-
-## Future Considerations
-
-- [x] Automated AI-DLC execution integration (implemented)
-- [x] Pre-inception idea capture (/ideate skill)
-- [x] Unified entry point (/start skill)
-- [ ] IDE-specific skill variants
-- [ ] Multi-language skill templates
-- [ ] Team collaboration patterns
-- [ ] /scaffold skill for project structure generation
+*Update this document as architectural decisions evolve. The AIDLC artifacts under `aidlc-docs/inception/application-design/` remain the source of truth.*

@@ -1,0 +1,60 @@
+# Pipeline A — Style Study
+# Runs per active channel on a configurable cadence.
+# STUB: matrix strategy + channel discovery finalized in U8 Infrastructure Design.
+
+name: pipeline-a-style-study
+
+on:
+  schedule:
+    - cron: "0 18 * * *"   # 03:00 KST daily
+  workflow_dispatch:
+    inputs:
+      channel_id:
+        description: "Single channel ID (optional; runs all active if blank)"
+        required: false
+        type: string
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    outputs:
+      channels: ${{ steps.list.outputs.channels }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+        with:
+          python-version: "3.12"
+      - run: uv sync
+      - id: list
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          CHANNEL_OVERRIDE: ${{ inputs.channel_id }}
+        run: uv run reel-mind discover-channels --pipeline a  # TODO: implement in U8
+
+  run:
+    needs: discover
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        channel: ${{ fromJson(needs.discover.outputs.channels) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+        with:
+          python-version: "3.12"
+      - run: uv sync
+      - name: Run Pipeline A
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY: ${{ secrets.R2_ACCESS_KEY }}
+          R2_SECRET_KEY: ${{ secrets.R2_SECRET_KEY }}
+          R2_BUCKET: ${{ secrets.R2_BUCKET }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_OPERATOR_CHAT_ID: ${{ secrets.TELEGRAM_OPERATOR_CHAT_ID }}
+          CHANNEL_ID: ${{ matrix.channel }}
+        run: uv run reel-mind run-pipeline --pipeline a --channel "$CHANNEL_ID"  # TODO: implement in U3/U8

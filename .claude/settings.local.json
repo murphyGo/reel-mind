@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "WebFetch(domain:aws.amazon.com)",
-      "WebFetch(domain:prod.d13rzhkk8cj2z0.amplifyapp.com)"
+      "WebFetch(domain:prod.d13rzhkk8cj2z0.amplifyapp.com)",
+      "Bash(mkdir -p /Users/user/Desktop/Projects/reel-mind/.claude/skills/dev-reel-mind /Users/user/Desktop/Projects/reel-mind/.claude/skills/code-review /Users/user/Desktop/Projects/reel-mind/.claude/skills/tech-debt /Users/user/Desktop/Projects/reel-mind/.claude/skills/cross-check /Users/user/Desktop/Projects/reel-mind/docs/sessions /Users/user/Desktop/Projects/reel-mind/docs/adr /Users/user/Desktop/Projects/reel-mind/docs/cross-checks /Users/user/Desktop/Projects/reel-mind/aidlc-docs/construction/plans)",
+      "Bash(cp -r /Users/user/Desktop/Projects/reel-mind/docs/references/code-review-protocols /Users/user/Desktop/Projects/reel-mind/.claude/skills/code-review/protocols)",
+      "Bash(cp /Users/user/Desktop/Projects/reel-mind/docs/references/tech-debt-template.md /Users/user/Desktop/Projects/reel-mind/.claude/skills/tech-debt/SKILL.md)",
+      "Bash(cp /Users/user/Desktop/Projects/reel-mind/docs/references/cross-check-template.md /Users/user/Desktop/Projects/reel-mind/.claude/skills/cross-check/SKILL.md)"
     ]
   },
   "enabledMcpjsonServers": [

@@ -73,3 +73,18 @@ temp/
 
 # Obsidian
 .obsidian/
+
+# Next.js / web
+web/.next/
+web/out/
+web/.vercel/
+*.tsbuildinfo
+
+# Web env
+web/.env
+web/.env.local
+web/.env.*.local
+!web/.env.example
+
+# Project artifacts
+/artifacts/

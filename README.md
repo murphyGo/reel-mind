@@ -1,243 +1,80 @@
-# AI-DLC Starter
+# Reel-Mind
 
-Transform ideas into fully-specified, development-ready projects using AI-DLC methodology and Claude-powered automation.
+A 24/7 autonomous AI pipeline that researches short-form video trends, scripts and produces videos, publishes them across a portfolio of single-subject channels, and iterates on performance — all orchestrated by Claude with configurable human approval.
 
-## What is This?
+## Overview
 
-AI-DLC Starter is a template project that bridges:
-- **AI-DLC** (AWS's AI-Driven Development Life Cycle methodology)
-- **Claude Code Skills** (executable automation commands)
+Running a portfolio of monetized short-form video channels is labor-intensive: trend research, style-matching, scripting, editing, publishing, and metrics review must happen daily per channel. Reel-Mind automates the full loop for a solo operator, adapts continuously to platform trends, and runs N channels in parallel.
 
-**Result**: Idea → Enhanced Requirements → AI-DLC Specs → Working Project
+## Features
 
-## Quick Start
+- **Style Study pipeline** — continuously learns current editing conventions for each channel's subject
+- **Content Production pipeline** — trend scout → plan → hybrid video generation → optional approval → publish
+- **Measure & Learn pipeline** — ingests metrics and feeds the loop
+- **Multi-channel orchestration** — N channels, isolated failures, per-channel config
+- **Pluggable adapters** — sources, TTS, stock media, generative video, publishing platforms
+- **Web dashboard** (Next.js + Supabase) for observability and approvals
+- **Telegram bot** for push alerts and mobile approval
+- **Per-channel budget governance** with hard generative-video caps
 
-### 1. Clone and Setup
+## Tech Stack
+
+| Component | Technology |
+|-----------|------------|
+| Pipelines | Python 3.12, Claude Agent SDK, ffmpeg, moviepy |
+| State / Metadata | Supabase (Postgres + Auth + Realtime) |
+| Artifacts | Cloudflare R2 |
+| Web UI | Next.js 15, Tailwind, shadcn/ui (Vercel) |
+| Approval / Alerts | Telegram bot |
+| Runtime | GitHub Actions (cron + matrix per channel) |
+| Models | Claude Opus 4.6 (creative), Claude Haiku 4.5 (mechanical) |
+
+## Getting Started
+
+### Prerequisites
+
+- Python 3.12 with `uv` or `pip-tools`
+- Node.js 20+
+- `ffmpeg` installed locally
+- Accounts/API keys: Anthropic, Supabase, Cloudflare R2, YouTube Data API, Telegram Bot, chosen TTS + stock-media providers
+
+### Installation
 
 ```bash
-git clone https://github.com/murphyGo/aidlc-starter.git my-project
-cd my-project
+git clone <repo-url>
+cd reel-mind
+
+# Project structure is generated via /scaffold after init.
 ```
 
-### 2. Start with Claude
+## Development
+
+This project is built with **AI-DLC** methodology and **Claude Code** skills.
 
 ```bash
 claude
+/dev-reel-mind
 ```
 
-Then run:
-```
-/start
-```
+`/dev-reel-mind` reads `aidlc-docs/aidlc-state.md` and walks you through construction one unit and one stage at a time.
 
-**Option A: Guided (Recommended for rough ideas)**
-```
-/ideate
-```
-Claude will ask questions and help you shape your idea into a structured `IDEA.md`.
+### Development Workflow
 
-**Option B: Write directly**
-Edit `IDEA.md` at the project root:
+1. `/dev-reel-mind` — get the next AIDLC construction step
+2. Implement following `docs/requirements.md` and the unit's design artifacts
+3. `/code-review git` — review before committing
+4. Track debt with `/tech-debt`
 
-```markdown
-# My Project Idea
+### Key Documents
 
-## One-Liner
-A REST API for managing personal book collections
-
-## The Problem
-Book lovers struggle to track their reading lists across devices
-
-## Core Features
-- User authentication
-- CRUD operations for books
-- Search by title/author
-- Export to CSV
-
-## Tech Preferences
-- Language: Go
-- Database: PostgreSQL
-```
-
-### Applying to an Existing Project
-
-Already have a codebase? Use `/adopt` instead of `/ideate`:
-
-```
-/adopt
-```
-
-Claude will:
-1. **Scan** your existing codebase (languages, frameworks, structure)
-2. **Guide** you through describing what to add and what to preserve
-3. **Generate** a brownfield-formatted `IDEA.md` with Current State / What We Are Adding / What Must Not Change
-
-Then run `/init-project` as usual — AI-DLC will auto-detect the existing code and run a reverse engineering stage before generating specs.
-
-**Quick setup**: Copy these into your existing project, then run `/start`:
-- `.claude/skills/` directory
-- `aidlc-workflows/` directory
-- `docs/references/` directory
-
-### 3. Initialize Project
-
-```
-/init-project
-```
-
-Claude will:
-1. **Analyze** your idea and suggest improvements
-2. **Refine** requirements through interactive dialogue
-3. **Generate** AI-DLC specification documents
-4. **Create** project-specific development skills
-
-## Three-Stage Automation
-
-### Stage 0: Interactive Requirements Refinement
-
-Claude analyzes your `IDEA.md` and:
-- Identifies gaps (error handling, edge cases, security)
-- Suggests improvements with clear rationale
-- Engages in dialogue until requirements are solid
-- Generates enhanced `docs/requirements.md`
-
-### Stage 1: AI-DLC Spec Generation
-
-Creates AI-DLC input documents:
-- `docs/vision.md` - Project vision and goals
-- `docs/tech-env.md` - Technical environment spec
-
-Then guides AI-DLC workflow to produce:
-- `aidlc-docs/inception/` - Requirements, user stories, application design
-- `aidlc-docs/construction/` - Functional design, NFRs, build plans
-
-### Stage 2: Skill Generation
-
-Creates project-specific automation:
-- `/dev-{project}` - Main development driver
-- `/code-review` - Code quality checks
-- `/tech-debt` - Debt management
-- `/cross-check` - Requirements compliance
-
-## Available Skills
-
-| Skill | Purpose |
-|-------|---------|
-| `/start` | Unified entry point - auto-detects state and routes |
-| `/ideate` | Capture lightning idea through guided dialogue |
-| `/adopt` | Onboard existing codebase into AI-DLC workflow |
-| `/init-project` | Bootstrap new project from idea (add `--quick` for fast-track) |
-| `/scaffold` | Generate project structure from specs |
-| `/code-review git` | Review changed files for issues |
-| `/tech-debt` | View/manage technical debt |
-| `/cross-check` | Verify implementation vs requirements |
-
-## Example
-
-See [`examples/book-tracker/`](examples/book-tracker/README.md) for a complete walkthrough from rough idea to project-ready state:
-
-1. **Raw idea**: "I want to build something that helps me track my reading habits"
-2. **After `/ideate`**: Structured IDEA.md with problem, features, suggested tech
-3. **After `/init-project`**: 6 functional requirements, Go + Chi + PostgreSQL decisions, AI-DLC inception artifacts
-4. **After `/scaffold`**: Directories and config files ready for development
-
-## Project Structure
-
-```
-aidlc-starter/
-├── README.md
-├── CLAUDE.md                    # Claude Code context
-├── IDEA.md                      # Your idea (input) ← START HERE
-├── docs/
-│   ├── PROJECT-VISION.md        # About aidlc-starter template
-│   ├── DESIGN.md                # Architecture decisions
-│   └── references/              # Skill templates (copied during init)
-│       ├── dev-skill-template.md
-│       ├── code-review-template.md
-│       ├── tech-debt-template.md
-│       └── cross-check-template.md
-├── .claude/
-│   └── skills/
-│       ├── start/               # Unified entry point
-│       ├── ideate/              # Idea capture skill
-│       ├── adopt/               # Brownfield adoption skill
-│       └── init-project/        # Bootstrap skill
-└── aidlc-workflows/             # AWS AI-DLC rules
-    └── aidlc-rules/
-        ├── aws-aidlc-rules/     # Core workflow
-        └── aws-aidlc-rule-details/  # Stage details
-```
-
-After running `/init-project`, your project will have:
-- `.claude/skills/dev-{project}/` - Project-specific development skill
-- `.claude/skills/code-review/` - Code quality checks
-- `.claude/skills/tech-debt/` - Debt management
-- `.claude/skills/cross-check/` - Requirements compliance
-
-## Feedback Loop
-
-The system supports continuous improvement:
-
-1. **Session Logs** - Every dev session creates traceability
-2. **TECH-DEBT Tracking** - Issues captured and prioritized
-3. **Cross-Check Reports** - Phase completion triggers compliance verification
-4. **Plan Evolution** - Development plan updates as work progresses
-
-## Requirements
-
-- [Claude Code CLI](https://github.com/anthropics/claude-code)
-- Git
-
-## How It Works
-
-```
-┌─────────────────┐
-│     /start      │  Unified entry point
-└────────┬────────┘
-         │
-    ┌────┴────┐
-    ▼         ▼
-┌────────┐ ┌────────┐
-│/ideate │ │/adopt  │  New idea vs. existing codebase
-└───┬────┘ └───┬────┘
-    │          │
-    └────┬─────┘
-         ▼
-┌─────────────────┐
-│    IDEA.md      │  Your structured idea
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│  /init-project  │  Claude-powered refinement
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│ requirements.md │  Enhanced, structured requirements
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│    AI-DLC       │  Spec generation workflow (auto)
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│  aidlc-docs/    │  Complete specifications
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│   /scaffold     │  Directories + config files
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│  /dev-{name}    │  Project automation
-└─────────────────┘
-```
+| Document | Description |
+|----------|-------------|
+| `aidlc-docs/aidlc-state.md` | AIDLC state and progress |
+| `aidlc-docs/inception/application-design/` | Components, methods, services, dependencies |
+| `docs/requirements.md` | Full FR/NFR requirements |
+| `docs/DESIGN.md` | Architecture summary |
+| `CLAUDE.md` | Context for Claude Code sessions |
 
 ## License
 
-MIT
+MIT (to be confirmed)
