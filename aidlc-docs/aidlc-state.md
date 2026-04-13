@@ -33,7 +33,7 @@
 ### CONSTRUCTION PHASE (per-unit loop, units defined in Step 13)
 | Stage | Decision | Status |
 |-------|----------|--------|
-| Functional Design | EXECUTE | ⏳ Pending |
+| Functional Design | EXECUTE | 🟡 In Progress (U1 ✅ 2026-04-13; U2–U8 pending) |
 | NFR Requirements | EXECUTE | ⏳ Pending |
 | NFR Design | EXECUTE | ⏳ Pending |
 | Infrastructure Design | EXECUTE | ⏳ Pending |

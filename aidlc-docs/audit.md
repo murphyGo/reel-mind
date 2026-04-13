@@ -123,3 +123,21 @@
 **Context**: Scaffold — Steps 4-6
 
 ---
+
+## 2026-04-13 — Construction: U1 Functional Design (draft complete, awaiting approval)
+**Stage**: Construction → Functional Design
+**Unit**: U1 Shared Foundation
+**User Input**: Answered 10 question groups in `construction/plans/U1-functional-design-plan.md` (config precedence, secret naming, cost-ledger month in UTC with $20 aggregate cap, KST scheduled_slot, canceled state for approval-reject, retrying stage status, service-role Supabase, 1h presigned URL TTL, shared ReelMindError hierarchy).
+**AI Response**: Generated `aidlc-docs/construction/U1/functional-design/{domain-entities,business-logic-model,business-rules}.md`. Plan steps P1–P6 marked complete. Presented 2-option completion.
+**Context**: Construction — U1 Functional Design
+
+---
+
+## 2026-04-13 — Construction: U1 Functional Design APPROVED
+**Stage**: Construction → Functional Design
+**Unit**: U1 Shared Foundation
+**User Input**: "ok" (explicit approval of 2-option "Continue to Next Stage")
+**AI Response**: Marked U1 Functional Design complete in aidlc-state.md. Next target: U1 NFR Requirements.
+**Context**: Construction — U1 Functional Design → complete
+
+---
