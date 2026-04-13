@@ -141,3 +141,60 @@
 **Context**: Construction — U1 Functional Design → complete
 
 ---
+
+## 2026-04-13 — Construction: U1 NFR Requirements (stage entered)
+**Stage**: Construction → NFR Requirements
+**Unit**: U1 Shared Foundation
+**User Input**: "yes" (approved entry to stage)
+**AI Response**: Generated `construction/plans/U1-nfr-requirements-plan.md` with 10 question groups covering scalability, performance thresholds, availability posture, security controls, reliability/retry, observability, maintainability, tech-stack picks, dependency versioning, and extension compliance.
+**Context**: Construction — U1 NFR Requirements
+
+---
+
+## U1 NFR Requirements — Step P2 (Artifact Generation)
+**Timestamp**: 2026-04-14T00:00:00+09:00
+**User Input**: "yes" (approved P2 execution)
+**AI Response**: Generated `aidlc-docs/construction/U1/nfr-requirements/nfr-requirements.md` with 41 NFR-UNIT-U1-### entries across 8 categories (Scalability, Performance, Availability, Security, Reliability, Observability, Maintainability, Compliance). Included project NFR + functional design traceability matrix and explicit out-of-scope register.
+**Context**: Construction — U1 NFR Requirements (P2 of 4)
+
+---
+
+## U1 NFR Requirements — Step P3 (Tech Stack Decisions)
+**Timestamp**: 2026-04-14T00:30:00+09:00
+**User Input**: "yes" (approved P3 execution)
+**AI Response**: Generated `aidlc-docs/construction/U1/nfr-requirements/tech-stack-decisions.md` with 16 decisions (TS-01..TS-16): Python 3.12.x pin, uv lockfile-enforced, supabase-py v2 sync, boto3, pydantic v2 strict, structlog, decimal.Decimal/ROUND_HALF_UP, python-ulid, ruamel.yaml, pytest+hypothesis+pytest-cov+pytest-mock, mypy --strict, ruff (E,F,I,B,UP,SIM,RUF,S), no Sentry. Each decision cites satisfied NFRs and alternatives considered. Flagged: uv.lock currently untracked — to be committed in U1 Code Generation.
+**Context**: Construction — U1 NFR Requirements (P3 of 4)
+
+---
+
+## U1 NFR Requirements — Stage Complete (P4)
+**Timestamp**: 2026-04-14T00:45:00+09:00
+**User Input**: Re-invoked `/dev-reel-mind` after completion message — interpreted as "Continue to NFR Design"
+**AI Response**: Marked U1 NFR Requirements stage complete in aidlc-state.md. All 4 plan steps closed. Proceeding to U1 NFR Design stage entry.
+**Context**: Construction — U1 NFR Requirements (stage complete)
+
+---
+
+## U1 NFR Design — Stage Entry (P1 Plan Created)
+**Timestamp**: 2026-04-14T01:00:00+09:00
+**User Input**: "yes" (approved NFR Design stage entry)
+**AI Response**: Created `aidlc-docs/construction/plans/U1-nfr-design-plan.md` with 9 question groups (Q1–Q9) covering cost-aggregation pattern, R2 upload pattern, retry classification, redaction processor chain, concurrency/client lifecycle, error taxonomy structure, IdempotencyGuard derivation, PBT property catalog placement, and logical component decomposition.
+**Context**: Construction — U1 NFR Design (P1 of 4)
+
+---
+
+## U1 NFR Design — Step P2 (Design Patterns)
+**Timestamp**: 2026-04-14T01:30:00+09:00
+**User Input**: All Q1–Q9 answered in plan; re-invoked /dev-reel-mind = proceed with P2
+**AI Response**: Generated `aidlc-docs/construction/U1/nfr-design/nfr-design-patterns.md` with 15 patterns (P-01..P-15): RetryExecutor (STORAGE_DEFAULT + LEDGER_CRITICAL profiles), critical-write extended retry, redaction pipeline (with len-annotated masking + list traversal), structlog 8-step processor chain, single-gateway secret resolution with env-var template, Pydantic boundary validation with shared ChannelId type, live-SUM cost aggregation (Q1.1 option a), boto3 multipart at 16MiB threshold, local SigV4 presigning, per-invocation client construction, deterministic run_id_for (sha256[:24], supports both slot and idempotency_key), monotonic state guard via single UPDATE, structured exception fields, fail-fast on storage outage, and 22-property PBT spec catalog.
+**Context**: Construction — U1 NFR Design (P2 of 4)
+
+---
+
+## U1 NFR Design — Step P3 (Logical Components)
+**Timestamp**: 2026-04-14T02:00:00+09:00
+**User Input**: Re-invoked /dev-reel-mind = proceed with P3
+**AI Response**: Generated `aidlc-docs/construction/U1/nfr-design/logical-components.md` with 10 components (C-01..C-10): ConfigLoader, SecretsProvider, Logger, RedactionProcessor, SupabaseClient, R2Client, RetryExecutor, CostLedger, RunRecorder, IdempotencyGuard. Each with public interface signatures, dependencies, key behaviors, and explicit NFR realization. Includes bootstrap wiring spec (Runtime dataclass) and full NFR→Component matrix.
+**Context**: Construction — U1 NFR Design (P3 of 4)
+
+---
