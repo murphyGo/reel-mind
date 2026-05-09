@@ -13,6 +13,8 @@ from reel_mind.foundation.errors import (
     TerminalError,
     TerminalStorageError,
 )
+from reel_mind.foundation.idempotency import canonicalize_slot, run_id_for
+from reel_mind.foundation.logging import RedactionProcessor, get_logger, init_logger, redact_value
 from reel_mind.foundation.models import (
     AdaptersConfig,
     ApprovalMode,
@@ -30,6 +32,15 @@ from reel_mind.foundation.models import (
     StageStatus,
     Trigger,
     WarmupPhase,
+)
+from reel_mind.foundation.retry import (
+    LEDGER_CRITICAL,
+    STORAGE_DEFAULT,
+    Classification,
+    ClassificationKind,
+    RetryExecutor,
+    RetryPolicy,
+    classify_http_like,
 )
 from reel_mind.foundation.secrets import OAuthRefreshResult, SecretsProvider, secret_env_name
 
@@ -49,7 +60,10 @@ __all__ = [
     "LedgerEntry",
     "Pipeline",
     "PipelineRun",
+    "RedactionProcessor",
     "ReelMindError",
+    "RetryExecutor",
+    "RetryPolicy",
     "RetryableError",
     "RetryableStorageError",
     "RunState",
@@ -62,8 +76,18 @@ __all__ = [
     "TerminalStorageError",
     "Trigger",
     "WarmupPhase",
+    "canonicalize_slot",
+    "classify_http_like",
     "config_version_hash",
     "deep_merge",
+    "get_logger",
+    "init_logger",
+    "redact_value",
+    "run_id_for",
     "secret_env_name",
     "OAuthRefreshResult",
+    "Classification",
+    "ClassificationKind",
+    "LEDGER_CRITICAL",
+    "STORAGE_DEFAULT",
 ]

@@ -270,3 +270,11 @@
 **Context**: Construction — U1 Code Generation (Step 2 of 8)
 
 ---
+
+## U1 Code Generation — Step 3 (Logging, Retry, and Idempotency Primitives)
+**Timestamp**: 2026-05-10T07:14:49+09:00
+**User Input**: Continue the commit/push plus `/dev-reel-mind` loop.
+**AI Response**: Implemented `src/reel_mind/foundation/{logging.py,retry.py,idempotency.py}`, exported redaction/logger/retry/idempotency helpers, added unit/property tests, created `aidlc-docs/construction/U1/code/step-03-primitives.md`, and marked Step 3 complete in the U1 code generation plan. Verification: `uv run pytest tests/unit/foundation tests/property/test_foundation_properties.py -q` passed with 29 tests; `uv run ruff check src/reel_mind/foundation tests/unit/foundation tests/property/test_foundation_properties.py` passed.
+**Context**: Construction — U1 Code Generation (Step 3 of 8)
+
+---

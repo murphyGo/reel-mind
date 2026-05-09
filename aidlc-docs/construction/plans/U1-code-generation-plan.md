@@ -102,7 +102,7 @@ Consumer-facing imports should be stable under `reel_mind.foundation`.
   - Add code summary:
     - `aidlc-docs/construction/U1/code/step-02-config-secrets.md`
 
-- [ ] **Step 3 — Logging, redaction, retry, and idempotency primitives**
+- [x] **Step 3 — Logging, redaction, retry, and idempotency primitives**
   - Create/update:
     - `src/reel_mind/foundation/logging.py`
     - `src/reel_mind/foundation/retry.py`
