@@ -43,6 +43,12 @@ from reel_mind.foundation.retry import (
     classify_http_like,
 )
 from reel_mind.foundation.secrets import OAuthRefreshResult, SecretsProvider, secret_env_name
+from reel_mind.foundation.storage import (
+    R2Client,
+    SupabaseClient,
+    r2_key,
+    validate_r2_key,
+)
 
 __all__ = [
     "AdaptersConfig",
@@ -60,6 +66,7 @@ __all__ = [
     "LedgerEntry",
     "Pipeline",
     "PipelineRun",
+    "R2Client",
     "RedactionProcessor",
     "ReelMindError",
     "RetryExecutor",
@@ -72,6 +79,7 @@ __all__ = [
     "StageRecord",
     "StageStatus",
     "StorageError",
+    "SupabaseClient",
     "TerminalError",
     "TerminalStorageError",
     "Trigger",
@@ -85,6 +93,8 @@ __all__ = [
     "redact_value",
     "run_id_for",
     "secret_env_name",
+    "r2_key",
+    "validate_r2_key",
     "OAuthRefreshResult",
     "Classification",
     "ClassificationKind",

@@ -278,3 +278,11 @@
 **Context**: Construction — U1 Code Generation (Step 3 of 8)
 
 ---
+
+## U1 Code Generation — Step 4 (Supabase and R2 Client Wrappers)
+**Timestamp**: 2026-05-10T07:16:53+09:00
+**User Input**: Continue the commit/push plus `/dev-reel-mind` loop.
+**AI Response**: Implemented `src/reel_mind/foundation/storage.py`, exported `SupabaseClient`, `R2Client`, R2 key helpers, and multipart config constants, added mocked SDK tests in `tests/unit/foundation/test_storage.py`, created `aidlc-docs/construction/U1/code/step-04-storage-clients.md`, and marked Step 4 complete in the U1 code generation plan. Verification: `uv run pytest tests/unit/foundation tests/property/test_foundation_properties.py -q` passed with 33 tests; `uv run ruff check src/reel_mind/foundation tests/unit/foundation tests/property/test_foundation_properties.py` passed.
+**Context**: Construction — U1 Code Generation (Step 4 of 8)
+
+---

@@ -116,7 +116,7 @@ Consumer-facing imports should be stable under `reel_mind.foundation`.
   - Add code summary:
     - `aidlc-docs/construction/U1/code/step-03-primitives.md`
 
-- [ ] **Step 4 — Supabase and R2 client wrappers**
+- [x] **Step 4 — Supabase and R2 client wrappers**
   - Create/update:
     - `src/reel_mind/foundation/storage.py`
   - Implement `SupabaseClient` and `R2Client` wrappers with injected retry/logging, R2 key validation, presigned URL TTL validation, and transfer config constants.
