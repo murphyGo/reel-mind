@@ -35,8 +35,8 @@
 |-------|----------|--------|
 | Functional Design | EXECUTE | 🟡 In Progress (U1 ✅ 2026-04-13; U2–U8 pending) |
 | NFR Requirements | EXECUTE | 🟡 In Progress (U1 ✅ 2026-04-14; U2–U8 pending) |
-| NFR Design | EXECUTE | ⏳ Pending |
-| Infrastructure Design | EXECUTE | ⏳ Pending |
+| NFR Design | EXECUTE | 🟡 In Progress (U1 ✅ 2026-05-10; U2–U8 pending) |
+| Infrastructure Design | EXECUTE | 🟡 In Progress (U1 plan created 2026-05-10; U2–U8 pending) |
 | Code Generation | EXECUTE | ⏳ Pending |
 | Build and Test | EXECUTE | ⏳ Pending |
 

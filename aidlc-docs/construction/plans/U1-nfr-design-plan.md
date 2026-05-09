@@ -24,7 +24,7 @@ Most NFR knobs are already pinned. Open questions below target the few remaining
 - [x] **P1** Answer questions below
 - [x] **P2** Write `aidlc-docs/construction/U1/nfr-design/nfr-design-patterns.md` covering: retry/backoff, redaction processor pipeline, error taxonomy, cost-aggregation pattern, idempotency derivation, structured-log processor chain, validation patterns, secret-resolution gateway pattern
 - [x] **P3** Write `aidlc-docs/construction/U1/nfr-design/logical-components.md` enumerating internal sub-components of U1 (`SupabaseClient`, `R2Client`, `SecretsProvider`, `ConfigLoader`, `Logger`, `CostLedger`, `RunRecorder`, `IdempotencyGuard`, `RedactionProcessor`, `RetryExecutor`) with their interfaces, dependencies, and the NFRs each one realizes
-- [ ] **P4** Present completion (2-option workflow)
+- [x] **P4** Present completion (2-option workflow) — approved by `/dev-reel-mind` continuation on 2026-05-10
 
 ---
 

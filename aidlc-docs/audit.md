@@ -198,3 +198,19 @@
 **Context**: Construction — U1 NFR Design (P3 of 4)
 
 ---
+
+## U1 NFR Design — Stage Complete (P4)
+**Timestamp**: 2026-05-10T06:41:19+09:00
+**User Input**: Re-invoked `/dev-reel-mind` after P3 completion — interpreted as approval to continue.
+**AI Response**: Closed `aidlc-docs/construction/plans/U1-nfr-design-plan.md` P4 and marked U1 NFR Design complete in `aidlc-docs/aidlc-state.md`. Next target: U1 Infrastructure Design.
+**Context**: Construction — U1 NFR Design (stage complete)
+
+---
+
+## U1 Infrastructure Design — Stage Entry (P1 Plan Created)
+**Timestamp**: 2026-05-10T06:59:09+09:00
+**User Input**: Re-invoked `/dev-reel-mind` after U1 NFR Design completion.
+**AI Response**: Created `aidlc-docs/construction/plans/U1-infrastructure-design-plan.md` with planning checklist and 8 question groups covering deployment environments, compute targets, Supabase schema, R2 artifact storage, messaging/async boundaries, networking/access, monitoring/alerting, and shared infrastructure ownership. Marked U1 Infrastructure Design as in progress in `aidlc-docs/aidlc-state.md`.
+**Context**: Construction — U1 Infrastructure Design (P1 of 5)
+
+---
