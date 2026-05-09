@@ -262,3 +262,11 @@
 **Context**: Construction — U1 Code Generation (Step 1 of 8)
 
 ---
+
+## U1 Code Generation — Step 2 (Config Loading and Secret Resolution)
+**Timestamp**: 2026-05-10T07:12:08+09:00
+**User Input**: Continue the commit/push plus `/dev-reel-mind` loop.
+**AI Response**: Implemented `src/reel_mind/foundation/{config.py,secrets.py}`, exported config/secret helpers, aligned YAML dependency to `ruamel-yaml`, added adapter defaults to `config/defaults.yaml`, created `aidlc-docs/construction/U1/code/step-02-config-secrets.md`, and marked Step 2 complete in the U1 code generation plan. Verification: `uv run pytest tests/unit/foundation/test_models.py tests/unit/foundation/test_errors.py tests/unit/foundation/test_config.py tests/unit/foundation/test_secrets.py -q` passed with 17 tests; `uv run ruff check src/reel_mind/foundation tests/unit/foundation` passed.
+**Context**: Construction — U1 Code Generation (Step 2 of 8)
+
+---

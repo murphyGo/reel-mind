@@ -20,6 +20,14 @@ channel_defaults:
   measure_cadence_cron_kst: "30 2 * * *"        # daily metrics
   generative_video_budget_cap_usd: 20
   fallback_to_asset_assembly_on_budget_breach: true
+  adapters:
+    source:
+      - youtube_trends
+    tts: korean_tts
+    stock: pexels
+    publish:
+      youtube: youtube_shorts
+    generative_video: null
 
 models:
   creative: claude-opus-4-6

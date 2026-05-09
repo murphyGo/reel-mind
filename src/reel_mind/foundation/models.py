@@ -7,7 +7,14 @@ from decimal import Decimal
 from enum import StrEnum
 from typing import Annotated, Any
 
-from pydantic import BaseModel, ConfigDict, Field, StringConstraints, field_validator, model_validator
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    StringConstraints,
+    field_validator,
+    model_validator,
+)
 
 ChannelId = Annotated[str, StringConstraints(pattern=r"^[a-z0-9][a-z0-9-]{0,31}$")]
 
@@ -110,11 +117,12 @@ class ChannelConfig(FrozenModel):
     version_hash: str
 
     @model_validator(mode="after")
-    def validate_activation_rules(self) -> "ChannelConfig":
+    def validate_activation_rules(self) -> ChannelConfig:
         if self.active and not self.posting_schedule:
             msg = "posting_schedule is required when channel is active"
             raise ValueError(msg)
-        if self.approval_mode is ApprovalMode.OPTIONAL_TIMEOUT and self.approval_timeout_seconds is None:
+        timeout_required = self.approval_mode is ApprovalMode.OPTIONAL_TIMEOUT
+        if timeout_required and self.approval_timeout_seconds is None:
             msg = "approval_timeout_seconds is required for optional_timeout approval mode"
             raise ValueError(msg)
         return self
@@ -165,7 +173,7 @@ class PipelineRun(FrozenModel):
     config_version_hash: str | None = None
 
     @model_validator(mode="after")
-    def validate_terminal_timestamp(self) -> "PipelineRun":
+    def validate_terminal_timestamp(self) -> PipelineRun:
         if self.state is not RunState.STARTED and self.finished_at is None:
             msg = "finished_at is required for terminal runs"
             raise ValueError(msg)

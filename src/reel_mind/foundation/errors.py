@@ -43,7 +43,11 @@ class TerminalError(ReelMindError):
 
 class ConfigError(TerminalError):
     def __init__(self, field_path: str, reason: str) -> None:
-        super().__init__(f"invalid config at {field_path}: {reason}", field_path=field_path, reason=reason)
+        super().__init__(
+            f"invalid config at {field_path}: {reason}",
+            field_path=field_path,
+            reason=reason,
+        )
 
 
 class SecretError(TerminalError):
@@ -68,10 +72,14 @@ class RetryableStorageError(StorageError, RetryableError):
 
 class TerminalStorageError(StorageError, TerminalError):
     def __init__(self, operation: str, reason: str) -> None:
-        super().__init__(f"terminal storage failure during {operation}: {reason}", operation=operation, reason=reason)
+        super().__init__(
+            f"terminal storage failure during {operation}: {reason}",
+            operation=operation,
+            reason=reason,
+        )
 
 
-class BudgetExceeded(TerminalError):
+class BudgetExceeded(TerminalError):  # noqa: N818 - AIDLC contract name
     def __init__(
         self,
         *,
@@ -89,6 +97,9 @@ class BudgetExceeded(TerminalError):
         )
 
 
-class IdempotencyConflict(TerminalError):
+class IdempotencyConflict(TerminalError):  # noqa: N818 - AIDLC contract name
     def __init__(self, existing_run_id: str) -> None:
-        super().__init__(f"run already completed: {existing_run_id}", existing_run_id=existing_run_id)
+        super().__init__(
+            f"run already completed: {existing_run_id}",
+            existing_run_id=existing_run_id,
+        )

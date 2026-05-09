@@ -1,5 +1,6 @@
 """Shared foundation contracts for Reel-Mind."""
 
+from reel_mind.foundation.config import ConfigLoader, config_version_hash, deep_merge
 from reel_mind.foundation.errors import (
     BudgetExceeded,
     ConfigError,
@@ -30,6 +31,7 @@ from reel_mind.foundation.models import (
     Trigger,
     WarmupPhase,
 )
+from reel_mind.foundation.secrets import OAuthRefreshResult, SecretsProvider, secret_env_name
 
 __all__ = [
     "AdaptersConfig",
@@ -40,6 +42,7 @@ __all__ = [
     "ChannelConfig",
     "ChannelId",
     "ConfigError",
+    "ConfigLoader",
     "CostBucket",
     "ErrorRecord",
     "IdempotencyConflict",
@@ -51,6 +54,7 @@ __all__ = [
     "RetryableStorageError",
     "RunState",
     "SecretError",
+    "SecretsProvider",
     "StageRecord",
     "StageStatus",
     "StorageError",
@@ -58,4 +62,8 @@ __all__ = [
     "TerminalStorageError",
     "Trigger",
     "WarmupPhase",
+    "config_version_hash",
+    "deep_merge",
+    "secret_env_name",
+    "OAuthRefreshResult",
 ]

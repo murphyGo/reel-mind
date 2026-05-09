@@ -88,7 +88,7 @@ Consumer-facing imports should be stable under `reel_mind.foundation`.
   - Add code summary:
     - `aidlc-docs/construction/U1/code/step-01-foundation-models.md`
 
-- [ ] **Step 2 — Config loading and secret resolution**
+- [x] **Step 2 — Config loading and secret resolution**
   - Create/update:
     - `src/reel_mind/foundation/config.py`
     - `src/reel_mind/foundation/secrets.py`
