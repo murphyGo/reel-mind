@@ -214,3 +214,11 @@
 **Context**: Construction — U1 Infrastructure Design (P1 of 5)
 
 ---
+
+## U1 Infrastructure Design — Step P2 (Infrastructure Contract)
+**Timestamp**: 2026-05-10T07:02:54+09:00
+**User Input**: "한 스텝마다 commit push하고 /dev-reel-mind 진행을 계속 반복해" — proceed autonomously with commit/push after each step.
+**AI Response**: Filled the infrastructure plan answers using conservative defaults from existing requirements and design, then generated `aidlc-docs/construction/U1/infrastructure-design/infrastructure-design.md`. The artifact maps U1 components to Supabase, R2, GitHub Actions, secret layout, runtime assumptions, observability, and failure posture. It also resolves the secret env-var naming conflict by choosing the later NFR Design convention `REEL_MIND_<CHANNEL>_<KEY>` as canonical.
+**Context**: Construction — U1 Infrastructure Design (P2 of 5)
+
+---

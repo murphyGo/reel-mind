@@ -23,7 +23,7 @@ U1 is the shared Python foundation used by pipelines, the Telegram bot, and ops 
 ## Planning Checklist
 
 - [x] **P1** Create infrastructure design plan and collect answers below
-- [ ] **P2** Write `aidlc-docs/construction/U1/infrastructure-design/infrastructure-design.md` covering service mappings, Supabase schema contract, R2 bucket contract, secrets layout, runtime environment, monitoring, and security controls
+- [x] **P2** Write `aidlc-docs/construction/U1/infrastructure-design/infrastructure-design.md` covering service mappings, Supabase schema contract, R2 bucket contract, secrets layout, runtime environment, monitoring, and security controls
 - [ ] **P3** Write `aidlc-docs/construction/U1/infrastructure-design/deployment-architecture.md` covering how GHA jobs, bot host, ops scripts, Supabase, and R2 interact for U1
 - [ ] **P4** Write or update `aidlc-docs/construction/shared-infrastructure.md` with infrastructure decisions reused by U2-U8
 - [ ] **P5** Present completion (2-option workflow)
@@ -43,7 +43,7 @@ B) `local` and `production` only
 C) `production` only for MVP, with local using mocked services
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: A — local, staging, and production. Local may use mocks for fast tests, but the infrastructure contract names all three environments from the start.
 
 **Q1.2** Should `staging` use a separate Supabase project and R2 bucket, or share production infrastructure with prefixed test channel IDs?
 
@@ -52,7 +52,7 @@ B) Shared projects with `staging-*` channel IDs and R2 prefixes
 C) No staging infrastructure for MVP
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: A — separate Supabase project and separate R2 bucket. This avoids accidental production writes while testing migrations, RLS, and object paths.
 
 ### Q2 — Compute infrastructure
 
@@ -63,7 +63,7 @@ B) Support both GitHub-hosted and self-hosted runners from day one
 C) Self-hosted runners only
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: A — GitHub-hosted runners only for MVP. Self-hosted runner assumptions are out of scope until a workload exceeds the GitHub-hosted limits.
 
 **Q2.2** Telegram bot hosting is outside U1 code, but U1 must document secret/runtime assumptions. What bot host should the infrastructure design target?
 
@@ -73,7 +73,7 @@ C) A single VPS/manual host
 D) Defer exact bot host to U6; U1 documents only required env vars
 E) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: D — defer exact bot host to U6. U1 documents only required env vars, process assumptions, and logging expectations.
 
 ### Q3 — Supabase storage infrastructure
 
@@ -84,7 +84,7 @@ B) Documentation-only in Infrastructure Design; migration generation in Code Gen
 C) Supabase dashboard/manual setup for MVP
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: B — documentation-only in Infrastructure Design; migration generation in Code Generation. P2 defines the schema contract, and Code Generation creates SQL migrations.
 
 **Q3.2** For U1 tables, should `channel_id` reference `channels.id` with foreign keys everywhere, including `cost_ledger`, `pipeline_runs`, and artifact metadata?
 
@@ -93,7 +93,7 @@ B) Foreign keys for run/config tables, but `cost_ledger` remains append-only eve
 C) No foreign keys in MVP; rely on application validation
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: B — foreign keys for run/config tables, but `cost_ledger` keeps append-only accounting semantics even if channel metadata changes.
 
 **Q3.3** For append-only tables (`cost_ledger`, run/stage history), should the infrastructure include soft-retention/archive policies now?
 
@@ -102,7 +102,7 @@ B) Keep 24 months hot, then archive later
 C) Keep 12 months hot, then archive later
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: A — permanent retention for MVP; no archive policy.
 
 ### Q4 — R2 artifact storage
 
@@ -113,7 +113,7 @@ B) One bucket with environment prefixes
 C) One production bucket only for MVP
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: A — separate bucket per environment.
 
 **Q4.2** Should R2 object versioning/lifecycle rules be part of MVP infrastructure?
 
@@ -122,7 +122,7 @@ B) Delete intermediate artifacts after N days, retain published artifacts perman
 C) Enable object versioning for all artifacts
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: A — no lifecycle deletion; permanent retention for MVP.
 
 ### Q5 — Messaging and async infrastructure
 
@@ -133,7 +133,7 @@ B) Add a lightweight queue table in Supabase for future retry/reconciliation
 C) Use external queue infrastructure from day one
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: A — no queue for U1 MVP. Async orchestration remains in GitHub Actions and bot workflows.
 
 **Q5.2** If `CostLedger.record` fails after all retries, should there be any infrastructure-level reconciliation path?
 
@@ -142,7 +142,7 @@ B) Add a manual SQL reconciliation procedure documented for ops
 C) Add a Supabase `pending_ledger_reconciliation` table now
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: A — no infrastructure-level reconciliation path in MVP. The run fails and the operator investigates using logs and Supabase state.
 
 ### Q6 — Networking and access boundaries
 
@@ -153,7 +153,7 @@ B) Allow-list GitHub Actions and bot host egress where practical
 C) Allow-list only the bot host; GHA remains unrestricted
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: A — no IP allow-listing for MVP.
 
 **Q6.2** Should R2 access be private-only with presigned URLs for previews, or should any public bucket/path exist?
 
@@ -162,7 +162,7 @@ B) Public read for published artifacts only
 C) Public read for all non-secret media artifacts
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: A — private-only bucket; previews use presigned URLs.
 
 ### Q7 — Monitoring and alerting infrastructure
 
@@ -173,7 +173,7 @@ B) Mirror U1 logs into Supabase for central querying
 C) Send U1 logs to an external log backend
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: A — GitHub Actions logs for pipelines, bot-host logs for bot, Vercel logs for Web UI.
 
 **Q7.2** Should Infrastructure Design include any automated alerting for U1 failures before U6 exists?
 
@@ -182,7 +182,7 @@ B) GitHub Actions email/notification only
 C) Minimal Telegram webhook alert from GHA before U6
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: A — no automated U1 alerting before U6; rely on failed GitHub Actions runs.
 
 ### Q8 — Shared infrastructure and ownership
 
@@ -193,7 +193,7 @@ B) Each later unit may revise U1 tables as needed
 C) Put all schema ownership in U8 Orchestration
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: A — U1 owns shared tables and base conventions.
 
 **Q8.2** Should `shared-infrastructure.md` be created now as the canonical cross-unit infrastructure contract?
 
@@ -202,7 +202,7 @@ B) Defer shared infrastructure doc to U8
 C) Keep infrastructure contracts only inside each unit
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: A — create it in U1 Infrastructure Design as the canonical cross-unit infrastructure contract.
 
 ---
 
