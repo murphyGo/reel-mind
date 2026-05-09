@@ -5,9 +5,9 @@ from __future__ import annotations
 from collections.abc import Callable
 from datetime import UTC, datetime
 from decimal import Decimal
-from typing import Any, Protocol
+from typing import Any, Protocol, cast
 
-from boto3.s3.transfer import TransferConfig
+from boto3.s3.transfer import TransferConfig  # type: ignore[import-untyped]
 
 from reel_mind.foundation.models import ArtifactKind, ArtifactRef, ChannelId
 
@@ -34,7 +34,8 @@ class SupabaseClient:
             rows = _response_data(response)
             return rows[0] if rows else None
 
-        return self._retry.run(f"supabase.select_one({table})", operation)
+        result = self._retry.run(f"supabase.select_one({table})", operation)
+        return cast(dict[str, Any] | None, result)
 
     def select_many(
         self,
@@ -54,7 +55,8 @@ class SupabaseClient:
                 query = query.limit(limit)
             return list(_response_data(query.execute()))
 
-        return self._retry.run(f"supabase.select_many({table})", operation)
+        result = self._retry.run(f"supabase.select_many({table})", operation)
+        return cast(list[dict[str, Any]], result)
 
     def insert(self, table: str, row: dict[str, Any]) -> dict[str, Any]:
         def operation() -> dict[str, Any]:
@@ -62,7 +64,7 @@ class SupabaseClient:
             rows = _response_data(response)
             return rows[0] if rows else row
 
-        return self._retry.run(f"supabase.insert({table})", operation)
+        return cast(dict[str, Any], self._retry.run(f"supabase.insert({table})", operation))
 
     def update_where(
         self,
@@ -78,7 +80,7 @@ class SupabaseClient:
                 query = query.select("")
             return list(_response_data(query.execute()))
 
-        return self._retry.run(f"supabase.update({table})", operation)
+        return cast(list[dict[str, Any]], self._retry.run(f"supabase.update({table})", operation))
 
     def rpc(self, function: str, params: dict[str, Any]) -> Any:
         return self._retry.run(
@@ -89,9 +91,13 @@ class SupabaseClient:
     def aggregate_sum(self, table: str, *, column: str, eq: dict[str, Any]) -> Decimal:
         def operation() -> Decimal:
             response = self._client.table(table).select(column).match(eq).execute()
-            return sum(Decimal(str(row.get(column, "0"))) for row in _response_data(response))
+            return sum(
+                (Decimal(str(row.get(column, "0"))) for row in _response_data(response)),
+                Decimal("0"),
+            )
 
-        return self._retry.run(f"supabase.aggregate_sum({table}.{column})", operation)
+        result = self._retry.run(f"supabase.aggregate_sum({table}.{column})", operation)
+        return cast(Decimal, result)
 
 
 class R2Client:
@@ -119,16 +125,16 @@ class R2Client:
                 created_at=datetime.now(UTC),
             )
 
-        return self._retry.run(f"r2.put({key})", operation)
+        return cast(ArtifactRef, self._retry.run(f"r2.put({key})", operation))
 
     def get(self, key: str) -> bytes:
         validate_r2_key(key)
 
         def operation() -> bytes:
             response = self._s3.get_object(Bucket=self._bucket, Key=key)
-            return response["Body"].read()
+            return cast(bytes, response["Body"].read())
 
-        return self._retry.run(f"r2.get({key})", operation)
+        return cast(bytes, self._retry.run(f"r2.get({key})", operation))
 
     def head(self, key: str) -> ArtifactRef | None:
         validate_r2_key(key)
@@ -144,17 +150,20 @@ class R2Client:
                 created_at=response.get("LastModified", datetime.now(UTC)),
             )
 
-        return self._retry.run(f"r2.head({key})", operation)
+        return cast(ArtifactRef | None, self._retry.run(f"r2.head({key})", operation))
 
     def presigned_url(self, key: str, ttl_seconds: int = 3600) -> str:
         validate_r2_key(key)
         if not 1 <= ttl_seconds <= 86400:
             msg = "ttl_seconds must be between 1 and 86400"
             raise ValueError(msg)
-        return self._s3.generate_presigned_url(
-            "get_object",
-            Params={"Bucket": self._bucket, "Key": key},
-            ExpiresIn=ttl_seconds,
+        return cast(
+            str,
+            self._s3.generate_presigned_url(
+                "get_object",
+                Params={"Bucket": self._bucket, "Key": key},
+                ExpiresIn=ttl_seconds,
+            ),
         )
 
     def delete(self, key: str) -> None:

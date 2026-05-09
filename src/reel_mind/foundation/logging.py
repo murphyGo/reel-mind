@@ -5,8 +5,8 @@ from __future__ import annotations
 import atexit
 import re
 import sys
-from collections.abc import Mapping
-from typing import Any
+from collections.abc import Mapping, MutableMapping
+from typing import Any, cast
 
 import structlog
 
@@ -29,8 +29,13 @@ class RedactionProcessor:
         }
     )
 
-    def __call__(self, logger: Any, method_name: str, event_dict: dict[str, Any]) -> dict[str, Any]:
-        return redact_value(event_dict)
+    def __call__(
+        self,
+        logger: Any,
+        method_name: str,
+        event_dict: MutableMapping[str, Any],
+    ) -> Mapping[str, Any]:
+        return cast(Mapping[str, Any], redact_value(event_dict))
 
 
 def redact_value(value: Any) -> Any:
@@ -78,11 +83,11 @@ def init_logger(service: str) -> structlog.BoundLogger:
         wrapper_class=structlog.make_filtering_bound_logger(0),
         cache_logger_on_first_use=True,
     )
-    return structlog.get_logger(service=service)
+    return cast(structlog.BoundLogger, structlog.get_logger(service=service))
 
 
 def get_logger() -> structlog.BoundLogger:
-    return structlog.get_logger()
+    return cast(structlog.BoundLogger, structlog.get_logger())
 
 
 def _add_static_context(service: str) -> Any:

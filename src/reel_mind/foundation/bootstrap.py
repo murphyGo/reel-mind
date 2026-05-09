@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any
 
-import boto3
+import boto3  # type: ignore[import-untyped]
 from supabase import create_client
 
 from reel_mind.foundation.config import ConfigLoader

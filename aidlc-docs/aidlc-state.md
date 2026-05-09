@@ -37,7 +37,7 @@
 | NFR Requirements | EXECUTE | 🟡 In Progress (U1 ✅ 2026-04-14; U2–U8 pending) |
 | NFR Design | EXECUTE | 🟡 In Progress (U1 ✅ 2026-05-10; U2–U8 pending) |
 | Infrastructure Design | EXECUTE | 🟡 In Progress (U1 ✅ 2026-05-10; U2–U8 pending) |
-| Code Generation | EXECUTE | 🟡 In Progress (U1 plan created 2026-05-10; U2–U8 pending) |
+| Code Generation | EXECUTE | 🟡 In Progress (U1 ✅ 2026-05-10; U2–U8 pending) |
 | Build and Test | EXECUTE | ⏳ Pending |
 
 ## Extension Configuration

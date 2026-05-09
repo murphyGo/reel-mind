@@ -157,7 +157,7 @@ Consumer-facing imports should be stable under `reel_mind.foundation`.
   - Add code summary:
     - `aidlc-docs/construction/U1/code/step-07-migration-infra.md`
 
-- [ ] **Step 8 — Verification pass and U1 code-generation summary**
+- [x] **Step 8 — Verification pass and U1 code-generation summary**
   - Run targeted verification:
     - `uv run pytest tests/unit/foundation tests/property -q`
     - `uv run ruff check src tests`
