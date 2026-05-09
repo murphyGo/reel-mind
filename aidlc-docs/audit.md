@@ -286,3 +286,11 @@
 **Context**: Construction — U1 Code Generation (Step 4 of 8)
 
 ---
+
+## U1 Code Generation — Step 5 (Cost Ledger and Run Recorder)
+**Timestamp**: 2026-05-10T07:19:16+09:00
+**User Input**: Continue the commit/push plus `/dev-reel-mind` loop.
+**AI Response**: Implemented `src/reel_mind/foundation/{cost.py,runs.py}`, exported `CostLedger` and `RunRecorder`, added `python-ulid` dependency for ledger/run IDs, added unit tests in `tests/unit/foundation/{test_cost.py,test_runs.py}`, created `aidlc-docs/construction/U1/code/step-05-ledger-runs.md`, and marked Step 5 complete in the U1 code generation plan. Verification: `uv run pytest tests/unit/foundation tests/property/test_foundation_properties.py -q` passed with 38 tests; `uv run ruff check src/reel_mind/foundation tests/unit/foundation tests/property/test_foundation_properties.py` passed.
+**Context**: Construction — U1 Code Generation (Step 5 of 8)
+
+---

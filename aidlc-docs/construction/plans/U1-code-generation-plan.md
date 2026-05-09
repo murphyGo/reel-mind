@@ -125,7 +125,7 @@ Consumer-facing imports should be stable under `reel_mind.foundation`.
   - Add code summary:
     - `aidlc-docs/construction/U1/code/step-04-storage-clients.md`
 
-- [ ] **Step 5 — Cost ledger and run recorder**
+- [x] **Step 5 — Cost ledger and run recorder**
   - Create/update:
     - `src/reel_mind/foundation/cost.py`
     - `src/reel_mind/foundation/runs.py`

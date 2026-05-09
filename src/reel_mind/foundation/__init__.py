@@ -1,6 +1,7 @@
 """Shared foundation contracts for Reel-Mind."""
 
 from reel_mind.foundation.config import ConfigLoader, config_version_hash, deep_merge
+from reel_mind.foundation.cost import CostLedger
 from reel_mind.foundation.errors import (
     BudgetExceeded,
     ConfigError,
@@ -42,6 +43,7 @@ from reel_mind.foundation.retry import (
     RetryPolicy,
     classify_http_like,
 )
+from reel_mind.foundation.runs import RunRecorder
 from reel_mind.foundation.secrets import OAuthRefreshResult, SecretsProvider, secret_env_name
 from reel_mind.foundation.storage import (
     R2Client,
@@ -60,6 +62,7 @@ __all__ = [
     "ChannelId",
     "ConfigError",
     "ConfigLoader",
+    "CostLedger",
     "CostBucket",
     "ErrorRecord",
     "IdempotencyConflict",
@@ -74,6 +77,7 @@ __all__ = [
     "RetryableError",
     "RetryableStorageError",
     "RunState",
+    "RunRecorder",
     "SecretError",
     "SecretsProvider",
     "StageRecord",
