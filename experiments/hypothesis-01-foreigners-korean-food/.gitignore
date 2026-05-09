@@ -1,0 +1,7 @@
+.env
+videos/*/audio.mp3
+videos/*/final.mp4
+videos/*/clips/
+videos/*/concat.txt
+__pycache__/
+*.pyc
