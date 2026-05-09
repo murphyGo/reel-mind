@@ -24,7 +24,7 @@ U1 is the shared Python foundation used by pipelines, the Telegram bot, and ops 
 
 - [x] **P1** Create infrastructure design plan and collect answers below
 - [x] **P2** Write `aidlc-docs/construction/U1/infrastructure-design/infrastructure-design.md` covering service mappings, Supabase schema contract, R2 bucket contract, secrets layout, runtime environment, monitoring, and security controls
-- [ ] **P3** Write `aidlc-docs/construction/U1/infrastructure-design/deployment-architecture.md` covering how GHA jobs, bot host, ops scripts, Supabase, and R2 interact for U1
+- [x] **P3** Write `aidlc-docs/construction/U1/infrastructure-design/deployment-architecture.md` covering how GHA jobs, bot host, ops scripts, Supabase, and R2 interact for U1
 - [ ] **P4** Write or update `aidlc-docs/construction/shared-infrastructure.md` with infrastructure decisions reused by U2-U8
 - [ ] **P5** Present completion (2-option workflow)
 

@@ -222,3 +222,11 @@
 **Context**: Construction — U1 Infrastructure Design (P2 of 5)
 
 ---
+
+## U1 Infrastructure Design — Step P3 (Deployment Architecture)
+**Timestamp**: 2026-05-10T07:03:34+09:00
+**User Input**: Continue the commit/push plus `/dev-reel-mind` loop.
+**AI Response**: Generated `aidlc-docs/construction/U1/infrastructure-design/deployment-architecture.md`, documenting U1 runtime topology for GitHub Actions pipeline jobs, Telegram bot host assumptions, ops scripts, Web UI boundaries, secret injection, data/artifact flow, environment isolation, and observability flow. Marked P3 complete in the infrastructure design plan.
+**Context**: Construction — U1 Infrastructure Design (P3 of 5)
+
+---
