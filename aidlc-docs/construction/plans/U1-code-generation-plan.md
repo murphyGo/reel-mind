@@ -75,7 +75,7 @@ Consumer-facing imports should be stable under `reel_mind.foundation`.
 
 ## Code Generation Steps
 
-- [ ] **Step 1 — Foundation package skeleton, domain models, and exception contract**
+- [x] **Step 1 — Foundation package skeleton, domain models, and exception contract**
   - Create/update:
     - `src/reel_mind/foundation/__init__.py`
     - `src/reel_mind/foundation/models.py`
