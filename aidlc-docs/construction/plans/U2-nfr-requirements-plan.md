@@ -20,7 +20,7 @@ U2 is an internal Python adapter framework, not a network service. NFR focus:
 
 - [x] **P1** Create NFR requirements plan and collect answers below
 - [x] **P2** Write `aidlc-docs/construction/U2/nfr-requirements/nfr-requirements.md`
-- [ ] **P3** Write `aidlc-docs/construction/U2/nfr-requirements/tech-stack-decisions.md`
+- [x] **P3** Write `aidlc-docs/construction/U2/nfr-requirements/tech-stack-decisions.md`
 - [ ] **P4** Present completion (2-option workflow)
 
 ---

@@ -382,3 +382,11 @@
 **Context**: Construction — U2 NFR Requirements (P2 of 4)
 
 ---
+
+## U2 NFR Requirements — Step P3 (Tech Stack Decisions)
+**Timestamp**: 2026-05-10T07:34:06+09:00
+**User Input**: Continue the commit/push plus `/dev-reel-mind` loop.
+**AI Response**: Generated `aidlc-docs/construction/U2/nfr-requirements/tech-stack-decisions.md`, selecting Python `Protocol`s, Pydantic v2, U1 `RetryExecutor`, U1 error hierarchy, an in-memory registry, no provider SDKs in U2, deterministic in-repo mocks, and `pytest`/`hypothesis`. Marked P3 complete in the U2 NFR requirements plan.
+**Context**: Construction — U2 NFR Requirements (P3 of 4)
+
+---
