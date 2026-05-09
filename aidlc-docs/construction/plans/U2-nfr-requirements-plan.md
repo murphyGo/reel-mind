@@ -19,7 +19,7 @@ U2 is an internal Python adapter framework, not a network service. NFR focus:
 ## Planning Checklist
 
 - [x] **P1** Create NFR requirements plan and collect answers below
-- [ ] **P2** Write `aidlc-docs/construction/U2/nfr-requirements/nfr-requirements.md`
+- [x] **P2** Write `aidlc-docs/construction/U2/nfr-requirements/nfr-requirements.md`
 - [ ] **P3** Write `aidlc-docs/construction/U2/nfr-requirements/tech-stack-decisions.md`
 - [ ] **P4** Present completion (2-option workflow)
 
@@ -36,7 +36,7 @@ B) Up to 100 adapter instances per process
 C) Construct adapters lazily only, no startup validation
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: A — up to 20 adapter instances per process.
 
 ### Q2 — Performance
 
@@ -47,7 +47,7 @@ B) 50 ms per lookup
 C) 200 ms per lookup
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: A — 5 ms per lookup.
 
 ### Q3 — Availability
 
@@ -58,7 +58,7 @@ B) No, any source adapter failure fails the scout stage
 C) Only retryable failures are degradable
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: A — source adapters are independently degradable.
 
 ### Q4 — Security
 
@@ -69,7 +69,7 @@ B) No, rely on code review
 C) Defer to U8 CI
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: A — enforce no direct secret env reads outside U1 `SecretsProvider`.
 
 ### Q5 — Reliability
 
@@ -80,7 +80,7 @@ B) Longer provider retry budget: 5 attempts up to 10 seconds
 C) No default; every adapter must define its own
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: A — U1 `STORAGE_DEFAULT` style: 3 attempts with short exponential backoff and jitter.
 
 ### Q6 — Maintainability and typing
 
@@ -91,7 +91,7 @@ B) Abstract base classes for explicit inheritance
 C) Plain duck typing with tests only
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: A — `Protocol`s for structural typing.
 
 ### Q7 — Testing
 
@@ -102,7 +102,7 @@ B) Unit tests only
 C) Live provider contract tests in U2
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: A — unit tests for registry/interfaces/mocks plus PBT for registry determinism.
 
 ---
 
