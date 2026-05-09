@@ -326,3 +326,11 @@
 **Context**: Cross-Check — U1 Shared Foundation
 
 ---
+
+## U2 Functional Design — Stage Entry (P1 Plan Created)
+**Timestamp**: 2026-05-10T07:26:34+09:00
+**User Input**: Continue the commit/push plus `/dev-reel-mind` loop.
+**AI Response**: Created `aidlc-docs/construction/plans/U2-functional-design-plan.md` with planning checklist and seven question groups covering registry behavior, adapter context, cost accounting, retry ownership, error contract, reference mocks, and publish/metrics adapter scope. Marked U2 Functional Design as in progress in `aidlc-docs/aidlc-state.md`.
+**Context**: Construction — U2 Functional Design (P1 of 5)
+
+---
