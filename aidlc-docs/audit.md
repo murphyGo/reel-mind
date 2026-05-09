@@ -334,3 +334,11 @@
 **Context**: Construction — U2 Functional Design (P1 of 5)
 
 ---
+
+## U2 Functional Design — Step P2 (Domain Entities)
+**Timestamp**: 2026-05-10T07:27:26+09:00
+**User Input**: Continue the commit/push plus `/dev-reel-mind` loop.
+**AI Response**: Filled the U2 functional design plan answers with MVP defaults and generated `aidlc-docs/construction/U2/functional-design/domain-entities.md`, defining adapter registry metadata, adapter context, source/generative/TTS/stock/publish/metrics entities, and reference mock failure modes. Marked P2 complete in the U2 functional design plan.
+**Context**: Construction — U2 Functional Design (P2 of 5)
+
+---

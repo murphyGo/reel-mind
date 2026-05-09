@@ -24,7 +24,7 @@ U2 does **not** implement real YouTube/TTS/stock/provider adapters. Concrete pro
 ## Planning Checklist
 
 - [x] **P1** Create functional design plan and collect answers below
-- [ ] **P2** Write `aidlc-docs/construction/U2/functional-design/domain-entities.md`
+- [x] **P2** Write `aidlc-docs/construction/U2/functional-design/domain-entities.md`
 - [ ] **P3** Write `aidlc-docs/construction/U2/functional-design/business-logic-model.md`
 - [ ] **P4** Write `aidlc-docs/construction/U2/functional-design/business-rules.md`
 - [ ] **P5** Present completion (2-option workflow)
@@ -44,7 +44,7 @@ B) Fail lazily on first adapter resolution
 C) Warn and continue with a mock adapter
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: A — fail at startup during channel config/bootstrap validation.
 
 **Q1.2** Should the registry permit multiple adapters per kind in priority order, or exactly one configured adapter per kind except sources?
 
@@ -53,7 +53,7 @@ B) Every adapter kind supports ordered fallback lists
 C) Exactly one adapter for every kind, including sources
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: A — sources are ordered lists; all other kinds resolve exactly one adapter.
 
 ### Q2 — Adapter context
 
@@ -64,7 +64,7 @@ B) Only provider-specific settings; adapters pull U1 services globally
 C) Full U1 `Runtime`
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: A — `ChannelConfig`, `SecretsProvider`, `CostLedger`, `Logger`, and optional provider-specific settings.
 
 ### Q3 — Cost accounting
 
@@ -75,7 +75,7 @@ B) Adapter returns cost metadata; pipeline records it
 C) Both adapter and pipeline record for redundancy
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: A — adapter wrapper records cost through `CostLedger`.
 
 ### Q4 — Retry ownership
 
@@ -86,7 +86,7 @@ B) Separate retry engine owned by U2
 C) No adapter retry; pipelines handle retry
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: A — thin wrapper around U1 `RetryExecutor`.
 
 ### Q5 — Error contract
 
@@ -97,7 +97,7 @@ B) Provider-specific errors stay local and are translated by registry
 C) Adapters raise raw provider SDK errors
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: A — provider-specific errors subclass U1 retryable/terminal base classes.
 
 ### Q6 — Reference mocks
 
@@ -108,7 +108,7 @@ B) Successful responses only
 C) Full fake external-provider simulations
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: A — deterministic successful responses plus configurable terminal/retryable failures.
 
 ### Q7 — Publish adapter scope
 
@@ -119,7 +119,7 @@ B) Separate `MetricsAdapter`
 C) Defer metrics methods until U5
 D) Other (please describe after `[Answer]:`)
 
-[Answer]:
+[Answer]: A — `PublishAdapter` includes `fetch_metrics`.
 
 ---
 
