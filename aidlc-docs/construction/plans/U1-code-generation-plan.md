@@ -147,7 +147,7 @@ Consumer-facing imports should be stable under `reel_mind.foundation`.
   - Add code summary:
     - `aidlc-docs/construction/U1/code/step-06-bootstrap-cli.md`
 
-- [ ] **Step 7 — Supabase migration and infrastructure artifacts**
+- [x] **Step 7 — Supabase migration and infrastructure artifacts**
   - Create/update:
     - `supabase/migrations/*_u1_shared_foundation.sql`
     - `.env.example`

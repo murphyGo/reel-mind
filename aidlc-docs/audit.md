@@ -302,3 +302,11 @@
 **Context**: Construction — U1 Code Generation (Step 6 of 8)
 
 ---
+
+## U1 Code Generation — Step 7 (Migration and Infrastructure Artifacts)
+**Timestamp**: 2026-05-10T07:22:46+09:00
+**User Input**: Continue the commit/push plus `/dev-reel-mind` loop.
+**AI Response**: Added `supabase/migrations/202605100721_u1_shared_foundation.sql`, updated `.env.example` to canonical `REEL_MIND_*` secret names, created `aidlc-docs/construction/U1/code/step-07-migration-infra.md`, and marked Step 7 complete in the U1 code generation plan. Verification: `uv run pytest tests/unit/foundation tests/unit/test_cli.py tests/property/test_foundation_properties.py -q` passed with 41 tests; `rg` sanity check confirmed U1 tables, RLS enablement, and canonical env names.
+**Context**: Construction — U1 Code Generation (Step 7 of 8)
+
+---
