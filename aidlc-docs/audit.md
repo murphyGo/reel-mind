@@ -342,3 +342,11 @@
 **Context**: Construction — U2 Functional Design (P2 of 5)
 
 ---
+
+## U2 Functional Design — Step P3 (Business Logic Model)
+**Timestamp**: 2026-05-10T07:29:28+09:00
+**User Input**: Continue the commit/push plus `/dev-reel-mind` loop.
+**AI Response**: Generated `aidlc-docs/construction/U2/functional-design/business-logic-model.md`, covering registry startup validation, registration, adapter resolution, adapter context construction, paid-call wrapping, retry/error classification, interface workflows, and deterministic reference mock behavior. Marked P3 complete in the U2 functional design plan.
+**Context**: Construction — U2 Functional Design (P3 of 5)
+
+---
