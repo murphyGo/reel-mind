@@ -230,3 +230,11 @@
 **Context**: Construction — U1 Infrastructure Design (P3 of 5)
 
 ---
+
+## U1 Infrastructure Design — Step P4 (Shared Infrastructure Contract)
+**Timestamp**: 2026-05-10T07:04:43+09:00
+**User Input**: Continue the commit/push plus `/dev-reel-mind` loop.
+**AI Response**: Created `aidlc-docs/construction/shared-infrastructure.md` as the canonical cross-unit infrastructure contract for environments, Supabase ownership, R2 object layout, secret naming, runtime model, logging, reliability boundaries, time/identity conventions, extension enforcement, and change control. Marked P4 complete in the infrastructure design plan.
+**Context**: Construction — U1 Infrastructure Design (P4 of 5)
+
+---
