@@ -26,7 +26,7 @@ U2 does **not** implement real YouTube/TTS/stock/provider adapters. Concrete pro
 - [x] **P1** Create functional design plan and collect answers below
 - [x] **P2** Write `aidlc-docs/construction/U2/functional-design/domain-entities.md`
 - [x] **P3** Write `aidlc-docs/construction/U2/functional-design/business-logic-model.md`
-- [ ] **P4** Write `aidlc-docs/construction/U2/functional-design/business-rules.md`
+- [x] **P4** Write `aidlc-docs/construction/U2/functional-design/business-rules.md`
 - [ ] **P5** Present completion (2-option workflow)
 
 ---
