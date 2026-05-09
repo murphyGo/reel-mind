@@ -136,7 +136,7 @@ Consumer-facing imports should be stable under `reel_mind.foundation`.
   - Add code summary:
     - `aidlc-docs/construction/U1/code/step-05-ledger-runs.md`
 
-- [ ] **Step 6 — Bootstrap wiring and CLI smoke surfaces**
+- [x] **Step 6 — Bootstrap wiring and CLI smoke surfaces**
   - Create/update:
     - `src/reel_mind/foundation/bootstrap.py`
     - `src/reel_mind/cli/main.py` if missing or incomplete

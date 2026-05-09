@@ -294,3 +294,11 @@
 **Context**: Construction — U1 Code Generation (Step 5 of 8)
 
 ---
+
+## U1 Code Generation — Step 6 (Bootstrap and CLI)
+**Timestamp**: 2026-05-10T07:21:10+09:00
+**User Input**: Continue the commit/push plus `/dev-reel-mind` loop.
+**AI Response**: Implemented `src/reel_mind/foundation/bootstrap.py` and `src/reel_mind/cli/main.py`, exported `Runtime` and `build_runtime`, added tests in `tests/unit/foundation/test_bootstrap.py` and `tests/unit/test_cli.py`, created `aidlc-docs/construction/U1/code/step-06-bootstrap-cli.md`, and marked Step 6 complete in the U1 code generation plan. Verification: `uv run pytest tests/unit/foundation tests/unit/test_cli.py tests/property/test_foundation_properties.py -q` passed with 41 tests; `uv run ruff check src/reel_mind/foundation src/reel_mind/cli tests/unit/foundation tests/unit/test_cli.py tests/property/test_foundation_properties.py` passed.
+**Context**: Construction — U1 Code Generation (Step 6 of 8)
+
+---

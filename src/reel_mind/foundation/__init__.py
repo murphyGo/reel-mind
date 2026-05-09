@@ -1,5 +1,6 @@
 """Shared foundation contracts for Reel-Mind."""
 
+from reel_mind.foundation.bootstrap import Runtime, build_runtime
 from reel_mind.foundation.config import ConfigLoader, config_version_hash, deep_merge
 from reel_mind.foundation.cost import CostLedger
 from reel_mind.foundation.errors import (
@@ -76,6 +77,7 @@ __all__ = [
     "RetryPolicy",
     "RetryableError",
     "RetryableStorageError",
+    "Runtime",
     "RunState",
     "RunRecorder",
     "SecretError",
@@ -88,6 +90,7 @@ __all__ = [
     "TerminalStorageError",
     "Trigger",
     "WarmupPhase",
+    "build_runtime",
     "canonicalize_slot",
     "classify_http_like",
     "config_version_hash",
